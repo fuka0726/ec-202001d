@@ -65,7 +65,7 @@ public class LoginLogoutController {
 	@RequestMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/tologin";
+		return "item_list_toy";
 	}
 
 }

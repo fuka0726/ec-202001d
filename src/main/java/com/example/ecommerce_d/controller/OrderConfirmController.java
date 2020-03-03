@@ -19,6 +19,9 @@ public class OrderConfirmController {
 	@Autowired
 	private OrderConfirmService orderConfirmService;
 	
-	
+	@RequestMapping("/orderConfirm")
+	public String index() {
+		return "order_confirm";
+	}
 
 }
