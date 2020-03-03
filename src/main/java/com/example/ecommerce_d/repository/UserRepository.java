@@ -41,18 +41,20 @@ public class UserRepository {
 	 * 
 	 * メールアドレスとパスワードからユーザー情報を取得.
 	 * 
-	 * @param mail メールアドレス
-	 * @param      password パスワード
-	 * @return　　　ユーザー情報(検索がヒットしなければnull)
+	 * @param mail     メールアドレス
+	 * @param password パスワード
+	 * @return ユーザー情報(検索がヒットしなければnull)
 	 */
-	public List<User> findByMailAndPassword(String mail, String password) {
+	public User findByMailAndPassword(String mail, String password) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("mail", mail).addValue("password", password);
 		String sql = "select id, name , email , password , zipcode, address, telephone from users where id= :id and password= :password";
-		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
-		if (userList.size() == 0) {
+
+		try {
+			User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+			return user;
+		} catch (Exception e) {
 			return null;
 		}
-		return userList;
 	}
 
 }
