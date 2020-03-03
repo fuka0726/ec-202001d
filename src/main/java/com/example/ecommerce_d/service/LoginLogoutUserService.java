@@ -1,7 +1,5 @@
 package com.example.ecommerce_d.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +24,9 @@ public class LoginLogoutUserService {
 	 * @param password　パスワード
 	 * @return　ユーザー情報
 	 */
-	public List<User> login(String mail , String password) {
-		List<User> userList=userRepository.findByMailAndPassword(mail, password);
-		return userList;
+	public User login(String mail , String password) {
+		User user=userRepository.findByMailAndPassword(mail, password);
+		return user;
 		
 	}
 
