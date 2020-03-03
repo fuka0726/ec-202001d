@@ -57,7 +57,7 @@ public class ItemRepository {
 	public List<Item> findByLikeName(String name) {
 		String sql ="SELECT id, name, description, price_m,price_l,image_path,deleted "
 				+ " FROM items WHERE name like :name";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");;
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		if (itemList.size() == 0) {
 			return null;
