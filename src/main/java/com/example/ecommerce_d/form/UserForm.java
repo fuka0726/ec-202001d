@@ -13,19 +13,16 @@ import javax.validation.constraints.NotBlank;
 public class UserForm {
 
 	/** メールアドレス */
-	@Email(message="メールアドレス形式で入力してください")
-	@NotBlank(message="メールアドレスを入力してください")
-	String mail;
+	String email;
 	/** パスワード */
-	@NotBlank(message="パスワードを入力してください")
 	String password;
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -38,7 +35,9 @@ public class UserForm {
 
 	@Override
 	public String toString() {
-		return "UserForm [mail=" + mail + ", password=" + password + "]";
+		return "UserForm [email=" + email + ", password=" + password + ", getEmail()=" + getEmail() + ", getPassword()="
+				+ getPassword() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
