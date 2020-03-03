@@ -1,30 +1,73 @@
 package com.example.ecommerce_d.domain;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
+/**
+ * 注文情報を管理するエンティティクラス.
+ * 
+ * @author shumpei
+ *
+ */
 public class Order {
+	/** ID */
 	private Integer id;
+	/** ユーザーID */
 	private Integer userId;
+	/** 注文状態 */
 	private Integer status;
+	/** 合計金額 */
 	private Integer totalPrice;
-	private Integer orderDate;
+	/** 注文日 */
+	private Date orderDate;
+	/** 宛先氏名 */
 	private String destinationName;
+	/** 宛先Eメール */
 	private String destinationEmail;
+	/** 宛先郵便番号 */
 	private String destinationZipcode;
+	/** 宛先住所 */
 	private String destinationAddress;
+	/** 宛先TEL */
 	private String destinationTel;
+	/** 配達時間 */
 	private Timestamp deliveryTime;
+	/** 支払方法 */
 	private Integer paymentMethod;
+	/** ユーザ */
 	private User user;
-	private List<OrderItem>	orderItemList;
-	
-	public int getTax() {
-		return 0;
+	/** 注文リスト */
+	private List<OrderItem> orderItemList;
+
+	public Order() {
 	}
-	
+
+	/**
+	 * 消費税を計算します.
+	 * 
+	 * @return 消費税
+	 */
+	public int getTax() {
+		return (int) (this.totalPrice * 0.1);
+	}
+
+	/**
+	 * 合計金額を計算します.
+	 * 
+	 * @return 合計金額
+	 */
 	public int getCalcTotalPrice() {
-		return 0;
+		return this.totalPrice + getTax();
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
 
 	public Integer getId() {
@@ -59,11 +102,11 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	public Integer getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Integer orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -139,12 +182,4 @@ public class Order {
 		this.orderItemList = orderItemList;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
-				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
-				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
-				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
-	}
 }
