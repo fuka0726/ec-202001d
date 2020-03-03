@@ -13,6 +13,7 @@ import com.example.ecommerce_d.repository.ItemRepository;
 import com.example.ecommerce_d.repository.OrderItemRepository;
 import com.example.ecommerce_d.repository.OrderRepository;
 import com.example.ecommerce_d.repository.OrderToppingRepository;
+import com.example.ecommerce_d.repository.ToppingRepository;
 
 /**
  * 注文履歴を表示するための業務処理クラス.
@@ -35,8 +36,8 @@ public class ShowOrderHistoryService {
 	@Autowired
 	private ItemRepository itemRepository;
 
-//	@Autowired
-//	private ToppingRepository toppingRepository;
+	@Autowired
+	private ToppingRepository toppingRepository;
 
 	/**
 	 * ユーザーIDに紐づく注文履歴を表示します.

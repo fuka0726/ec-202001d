@@ -21,7 +21,7 @@ import com.example.ecommerce_d.domain.Topping;
 @Repository
 public class ToppingRepository {
 
-	private static final RowMapper<Topping> Topping_ROW_MAPPER = (rs, i) -> {
+	private static final RowMapper<Topping> TOPPING_ROW_MAPPER = (rs, i) -> {
 		Topping topping = new Topping();
 		topping.setId(rs.getInt("id"));
 		topping.setName(rs.getString("name"));
@@ -41,8 +41,21 @@ public class ToppingRepository {
 	 */
 	public List<Topping> findAll() {
 		String sql = "SELECT id,name,price_m,price_l from toppings ORDER BY id";
-		List<Topping> toppingList = template.query(sql, Topping_ROW_MAPPER);
+		List<Topping> toppingList = template.query(sql, TOPPING_ROW_MAPPER);
 		return toppingList;
+	}
+	
+	/**
+	 * IDから該当するトッピング情報を取得します.
+	 * 
+	 * @param id ID
+	 * @return トッピング情報
+	 */
+	public Topping load(Integer id) {
+		String sql = "SELECT id,name,price_m,price_l FROM toppings WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		Topping topping = template.queryForObject(sql, param, TOPPING_ROW_MAPPER);
+		return topping;
 	}
 
 	/**
@@ -54,7 +67,7 @@ public class ToppingRepository {
 	public List<Topping> findByToppingId(Integer toppingId) {
 		String sql = "SELECT id,name,price_m,price_l from toppings where id= :topping_id ORDER BY id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("topping_id", toppingId);
-		List<Topping> toppingList = template.query(sql, param, Topping_ROW_MAPPER);
+		List<Topping> toppingList = template.query(sql, param, TOPPING_ROW_MAPPER);
 		return toppingList;
 	}
 
