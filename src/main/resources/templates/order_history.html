@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,5 +46,14 @@
 			<!-- /.container-fluid -->
 		</nav>
 	</div>
+	<!-- 注文履歴を表示する -->
+	<div class="container">
+		<div th:if="${message}" th:text="${message}">注文履歴がありません</div>
+		<div th:each="order:${orderList}">
+			<span th:text="${order.orderDate}">3月2日</span>
+		</div>
+	</div>
+	
+	
 </body>
 </html>
