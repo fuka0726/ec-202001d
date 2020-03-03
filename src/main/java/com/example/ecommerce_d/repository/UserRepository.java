@@ -45,9 +45,9 @@ public class UserRepository {
 	 * @param password パスワード
 	 * @return ユーザー情報(検索がヒットしなければnull)
 	 */
-	public User findByMailAndPassword(String mail, String password) {
-		SqlParameterSource param = new MapSqlParameterSource().addValue("mail", mail).addValue("password", password);
-		String sql = "select id, name , email , password , zipcode, address, telephone from users where id= :id and password= :password";
+	public User findByMailAndPassword(String email, String password) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
+		String sql = "select id, name , email , password , zipcode, address, telephone from users where email= :email and password= :password";
 
 		try {
 			User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
