@@ -1,5 +1,8 @@
 package com.example.ecommerce_d.form;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 /**
  * 
  * ログイン情報をリクエストパラメータで受け取るformクラス.
@@ -10,8 +13,11 @@ package com.example.ecommerce_d.form;
 public class UserForm {
 
 	/** メールアドレス */
+	@Email(message="メールアドレス形式で入力してください")
+	@NotBlank(message="メールアドレスを入力してください")
 	String mail;
 	/** パスワード */
+	@NotBlank(message="パスワードを入力してください")
 	String password;
 
 	public String getMail() {
