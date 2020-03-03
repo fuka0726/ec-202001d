@@ -43,7 +43,7 @@ public class UserRepository {
 	 * 
 	 * @param mail メールアドレス
 	 * @param      password パスワード
-	 * @return
+	 * @return　　　ユーザー情報(検索がヒットしなければnull)
 	 */
 	public List<User> findByMailAndPassword(String mail, String password) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("mail", mail).addValue("password", password);
