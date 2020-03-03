@@ -1,5 +1,8 @@
 package com.example.ecommerce_d.form;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 /**
  * 
  * ログイン情報をリクエストパラメータで受け取るformクラス.
@@ -10,16 +13,16 @@ package com.example.ecommerce_d.form;
 public class UserForm {
 
 	/** メールアドレス */
-	String mail;
+	String email;
 	/** パスワード */
 	String password;
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -32,7 +35,9 @@ public class UserForm {
 
 	@Override
 	public String toString() {
-		return "UserForm [mail=" + mail + ", password=" + password + "]";
+		return "UserForm [email=" + email + ", password=" + password + ", getEmail()=" + getEmail() + ", getPassword()="
+				+ getPassword() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
