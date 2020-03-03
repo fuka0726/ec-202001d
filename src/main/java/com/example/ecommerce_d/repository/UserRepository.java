@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -53,6 +54,18 @@ public class UserRepository {
 			return null;
 		}
 		return userList;
+	}
+	
+	/**
+	 * 引数でもらったユーザー情報をusersテーブルに挿入します.
+	 * 
+	 * @param user ユーザー情報
+	 */
+	public void insert(User user) {
+		String sql = "INSERT INTO users (name,email,password,zipcode,address,telephone) VALUES(:name, :email, :password, :zipcode, :address, :telephone) ;";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+		template.update(sql, param);
+		
 	}
 
 }
