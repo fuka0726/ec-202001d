@@ -33,6 +33,7 @@ public class LoginLogoutController {
 	 * @param form ログイン画面から送られるユーザ情報.
 	 * @return ログイン画面もしくは検索リストに画面遷移
 	 */
+	@RequestMapping("/login")
 	public String Login(UserForm form) {
 
 		User user = loginLogoutUserService.login(form.getMail(), form.getPassword());
