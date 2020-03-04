@@ -48,7 +48,7 @@ public class ShowOrderHistoryService {
 	public List<Order> showOrderHistory(Integer userId) {
 		List<Order> orderList = new ArrayList<>();
 		// status = 4(配送完了)のリストを表示 ← 仕様に応じて要検討
-		orderList = orderRepository.findByUserIdAndStatus(userId, 0);
+		orderList = orderRepository.findByUserIdAndStatus(userId, 4);
 		// それぞれの注文情報について処理
 		for (Order order : orderList) {
 			// 注文情報のIDを持つ注文アイテムリストをセット
