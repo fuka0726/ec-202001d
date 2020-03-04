@@ -64,11 +64,12 @@ public class ToppingRepository {
 	 * @param toppingId
 	 * @return 注文トッピングリスト
 	 */
-	public List<Topping> findByToppingId(Integer toppingId) {
+	public Topping findByToppingId(Integer toppingId) {
 		String sql = "SELECT id,name,price_m,price_l from toppings where id= :topping_id ORDER BY id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("topping_id", toppingId);
-		List<Topping> toppingList = template.query(sql, param, TOPPING_ROW_MAPPER);
-		return toppingList;
+
+		Topping topping = template.queryForObject(sql, param, TOPPING_ROW_MAPPER);
+		return topping;
 	}
 
 }
