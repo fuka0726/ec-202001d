@@ -14,12 +14,12 @@
 </head>
 
  <span th:include="header::frag_header"></span>
-	</div>
+	
 	<!-- 注文履歴を表示する -->
 	<div class="row">
 			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<h3 class="text-center">注文履歴</h3>
-			<div th:if="${message}" th:text="${message}">注文履歴がありません</div>
+			<div th:if="${message}"><h3 th:text="${message}" class="text-center">注文履歴がありません</h3></div>
 			
 			<!-- 1つ1つの注文履歴 -->
 			<div th:each="order:${orderList}">
@@ -51,24 +51,30 @@
 						<tr th:each="orderItem:${order.orderItemList}">
 							<td>
 								<div class="center">
-									<img src="../static/img/1.jpg"
+									<img src="../static/img/1.jpg" th:src="@{/img/}+${orderItem.item.imagePath}"
 										class="img-responsive img-rounded" width="100" height="300"><br>
 									<span th:text="${orderItem.item.name}">謎のおもちゃ</span>
 								</div>
 							</td>
 							<td>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;
-								<span th:text="${orderItem.item.price}">2,380円</span>&nbsp;&nbsp;
-								<span th:text="${orderItem.item.size}" >1個</span>
+								<div class="text-center">
+ 									<span class="price">&nbsp;<span th:text="${orderItem.size}">M</span></span>&nbsp;&nbsp;
+									<span th:if="${orderItem.size}=='M'" th:text="${#numbers.formatInteger(orderItem.item.priceM, 2,'COMMA') + '円'}">2,380円</span>&nbsp;&nbsp;
+									<span th:if="${orderItem.size}=='L'" th:text="${#numbers.formatInteger(orderItem.item.priceL, 2,'COMMA') + '円'}">2,380円</span>&nbsp;&nbsp;
+									<span th:text="${orderItem.quantity}">1</span>個
+								</div>
 							</td>
 							<td>
 								<ul th:each="orderTopping:${orderItem.orderToppingList}">
-									<li th:text="orderTopping.name">ピーマン300円</li>
+									<li><span th:text="${orderTopping.topping.name}">ピーマン</span>
+									    <span th:if="${orderItem.size} == 'M'" th:text="${#numbers.formatInteger(orderTopping.topping.priceM, 2,'COMMA') + '円'}">200</span>
+									    <span th:if="${orderItem.size} == 'L'" th:text="${#numbers.formatInteger(orderTopping.topping.priceL, 2,'COMMA') + '円'}">300</span>
+									</li>
 								</ul>
 							</td>
 							<td>
 								<div class="text-center">
-									3,280円
+									<span th:text="${#numbers.formatInteger(order.totalPrice, 2, 'COMMA') + '円'}">3,280円</span>
 								</div>
 							</td>
 						</tr>
@@ -77,5 +83,6 @@
 			  </div>
 			</div>
 		</div>
+ 	</div>
 </body>
 </html>
