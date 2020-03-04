@@ -34,25 +34,25 @@ public class OrderConfirmController {
 	@RequestMapping("/orderConfirm")
 	public String index(Integer userId) {
 
-		List<Order> orderList = orderConfirmService.showOrderedList(userId);
-
-		for (Order order : orderList) {
-			List<OrderItem> orderItemList = orderConfirmService.showOrderedItemList(order.getId());
-			order.setOrderItemList(orderItemList);
-			for (OrderItem orderItem : orderItemList) {
-				Item item = orderConfirmService.showItemList(orderItem.getItemId());
-				orderItem.setItem(item);
-				List<OrderTopping> orderToppingList = orderConfirmService.showOrderedToppingList(orderItem.getId());
-				orderItem.setOrderToppingList(orderToppingList);
-				for (OrderTopping orderTopping : orderToppingList) {
-					Topping topping = orderConfirmService.showToppingList(orderTopping.getToppingId());
-					orderTopping.setTopping(topping);
-				}
-			}
-
-		}
-
-		session.setAttribute("orderList", orderList);
+//		List<Order> orderList = orderConfirmService.showOrderedList(userId);
+//
+//		for (Order order : orderList) {
+//			List<OrderItem> orderItemList = orderConfirmService.showOrderedItemList(order.getId());
+//			order.setOrderItemList(orderItemList);
+//			for (OrderItem orderItem : orderItemList) {
+//				Item item = orderConfirmService.showItemList(orderItem.getItemId());
+//				orderItem.setItem(item);
+//				List<OrderTopping> orderToppingList = orderConfirmService.showOrderedToppingList(orderItem.getId());
+//				orderItem.setOrderToppingList(orderToppingList);
+//				for (OrderTopping orderTopping : orderToppingList) {
+//					Topping topping = orderConfirmService.showToppingList(orderTopping.getToppingId());
+//					orderTopping.setTopping(topping);
+//				}
+//			}
+//
+//		}
+//
+//		session.setAttribute("orderList", orderList);
 		
 		return "order_confirm";
 	}

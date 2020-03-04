@@ -1,4 +1,9 @@
-<span th:fragment="header2">
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<span th:fragment="frag_header">
 <body>
 	<div class="container">
 		<nav class="navbar navbar-default">
@@ -13,7 +18,7 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" src="../static/../static/img/header_logo.png" height="35">
+						alt="main log" src="../static/img/header_logo.png" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -24,7 +29,7 @@
 						<a href="cart_list.html" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
 						<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
 						<a href="login.html" class="navbar-link">ログイン</a>&nbsp;&nbsp;
-						<a href="item_list.html" class="navbar-link">ログアウト</a>
+						<a href="item_list.html" th:href="@{/logout}" class="navbar-link">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -33,3 +38,4 @@
 		</nav>
 
 </span>
+</html>
