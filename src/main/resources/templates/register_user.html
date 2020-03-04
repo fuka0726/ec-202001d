@@ -45,56 +45,56 @@
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-					<form method="post" action="item_list.html" th:action="@{resister-user}">
+					<form method="post" action="item_list.html" th:action="@{resister-user}" th:object="${userResisterForm}">
 						<fieldset>
 							<legend>ユーザ登録</legend>
 							<div class="form-group">
 								<label for="inputName">名前:</label><label
-									class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-								<input type="text" id="inputName" class="form-control" name="name"
+									class="control-label" style="color: red" for="inputError" th:errors="*{name}">名前を入力してください</label>
+								<input type="text" id="inputName" class="form-control" name="name" th:field=*{name}
 									placeholder="Name">
 							</div>
 							<div class="form-group">
 								<label for="inputEmail">メールアドレス:</label><label
-									class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
-								<input type="text" id="inputEmail" class="form-control" name="email"
+									class="control-label" style="color: red" for="inputError" th:errors="*{email}">メールアドレスを入力してください</label>
+								<input type="text" id="inputEmail" class="form-control" name="email" th:field=*{email}
 									placeholder="Email">
 							</div>
 							<div class="form-group">
 								<label for="inputZipcode">郵便番号:</label>
 								<label
-									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
+									class="control-label" style="color: red" for="inputError" th:errors="*{zipcode}">郵便番号を入力してください</label>
 									<input type="button" value="住所検索">
-								<input type="text" id="inputZipcode" class="form-control" name="zipcode"
+								<input type="text" id="inputZipcode" class="form-control" name="zipcode" th:field=*{zipcode}
 									placeholder="Zipcode">
 								
 							</div>
 							<div class="form-group">
 								<label for="inputAddress">住所:</label>
 								<label
-									class="control-label" style="color: red" for="inputError">住所を入力してください</label>
-								<input type="text" id="inputAddress" class="form-control" name="address"
+									class="control-label" style="color: red" for="inputError" th:errors="*{address}">住所を入力してください</label>
+								<input type="text" id="inputAddress" class="form-control" name="address" th:field=*{address}
 									placeholder="Address">
 							</div>
 							<div class="form-group">
 								<label for="inputTel">電話番号:</label>
 								<label
-									class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-								<input type="text" id="inputTel" class="form-control" name="telephone"
+									class="control-label" style="color: red" for="inputError" th:errors="*{telephone}">電話番号を入力してください</label>
+								<input type="text" id="inputTel" class="form-control" name="telephone" th:field=*{telephone}
 									placeholder="Tel">
 							</div>
 							<div class="form-group">
 								<label for="inputPassword">パスワード:</label>
 								<label
-									class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
-								<input type="text" id="inputPassword" class="form-control" name="password"
+									class="control-label" style="color: red" for="inputError" th:errors="*{password}">パスワードを入力してください</label>
+								<input type="text" id="inputPassword" class="form-control" name="password" th:field=*{password}
 									placeholder="Password">
 							</div>
 							<div class="form-group">
 								<label for="inputConfirmationPassword">確認用パスワード:</label>
 								<label
-									class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
-								<input type="text" id="inputConfirmationPassword" class="form-control" name="confirmPassword"
+									class="control-label" style="color: red" for="inputError" th:errors="*{confirmPassword}">確認用パスワードを入力してください</label>
+								<input type="text" id="inputConfirmationPassword" class="form-control" name="confirmPassword" th:field=*{confirmPassword}
 									placeholder="Confirmation Password">
 							</div>
 							<div class="form-group">

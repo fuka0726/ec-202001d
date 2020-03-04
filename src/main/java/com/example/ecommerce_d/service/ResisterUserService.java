@@ -28,4 +28,14 @@ public class ResisterUserService {
 	public void insert(User user) {
 		repository.insert(user);
 	}
+	
+	/**
+	 *emailでuser情報を検索します.
+	 * 
+	 * @param email Eメール
+	 * @return　User情報、もしくは検索された結果がなければnull
+	 */
+	public User findByMail(String email) {
+		return repository.findByMail(email);
+	}
 }
