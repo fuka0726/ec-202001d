@@ -72,7 +72,7 @@ public class OrderConfirmService {
 	 * @param itemId 注文商品id
 	 * @return 注文商品詳細
 	 */
-	public Item showOItemList(Integer itemId) {
+	public Item showItemList(Integer itemId) {
 		Item item = itemRepository.load(itemId);
 		return item;
 	}
