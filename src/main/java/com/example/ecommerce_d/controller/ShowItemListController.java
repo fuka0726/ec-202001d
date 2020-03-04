@@ -17,7 +17,7 @@ import com.example.ecommerce_d.service.ShowItemListService;
  *
  */
 @Controller
-@RequestMapping("/item")
+@RequestMapping("")
 public class ShowItemListController {
 	
 	@Autowired
@@ -33,15 +33,15 @@ public class ShowItemListController {
 	@RequestMapping("/showItemList")
 	public String showItemList(String searchName,Model model) {
 		List<Item> itemList = showItemListService.showItemList();
-		model.addAttribute("itemList", itemList);
-		if (searchName == null) {
-			itemList = showItemListService.showItemList();
-			model.addAttribute("errormessage", "該当する商品がありません");
-		}else {
+		if (searchName != null) {
 			itemList = showItemListService.searchByName(searchName);
-			model.addAttribute("searchName", searchName);
-			
-		}		
+			model.addAttribute("itemList", itemList);
+		}
+		if(itemList.size() == 0) {
+				itemList = showItemListService.showItemList();
+				model.addAttribute("errormessage", "該当する商品がありません");
+			}				
+		model.addAttribute("itemList", itemList);
 		return "item_list_toy";
 	}
 	
