@@ -24,8 +24,8 @@ public class LoginLogoutUserService {
 	 * @param password　パスワード
 	 * @return　ユーザー情報
 	 */
-	public User login(String mail , String password) {
-		User user=userRepository.findByMailAndPassword(mail, password);
+	public User login(String email , String password) {
+		User user=userRepository.findByMailAndPassword(email, password);
 		return user;
 		
 	}

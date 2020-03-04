@@ -14,6 +14,13 @@ public class OrderConfirmService {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	/**
+	 * 
+	 * 注文情報を取得する.
+	 * 
+	 * @param userId ユーザーid
+	 * @return 注文リスト
+	 */
 	public List<Order> showOrderedList(Integer userId) {
 		List<Order> orderList = orderRepository.findByUserIdAndStatus(userId, 0);
 		return orderList;
