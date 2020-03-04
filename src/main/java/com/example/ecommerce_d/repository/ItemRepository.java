@@ -74,9 +74,6 @@ public class ItemRepository {
 				+ " FROM items WHERE name like :name";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
-		if (itemList.size() == 0) {
-			return null;
-		}
 		return itemList;
 
 	}

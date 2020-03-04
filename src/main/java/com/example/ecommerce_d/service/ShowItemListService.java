@@ -21,6 +21,19 @@ public class ShowItemListService {
 	private ItemRepository itemRepository;
 
 	/**
+	 * 商品情報を全件取得します.
+	 * 
+	 * @return 商品情報一覧
+	 */
+	public List<Item> showItemList() {
+		List<Item> itemList = itemRepository.findAll();
+		return itemList;
+	}
+
+	/**
+	 *
+	 * 名前から商品を曖昧検索します.
+	 * 
 	 * @param name 商品名
 	 * @return 検索された商品一覧
 	 */
