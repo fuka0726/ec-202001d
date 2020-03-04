@@ -4,6 +4,7 @@ package com.example.ecommerce_d.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_d.domain.User;
@@ -19,6 +20,10 @@ import com.example.ecommerce_d.service.ResisterUserService;
 @Controller
 @RequestMapping("")
 public class ResisterUserController {
+	@ModelAttribute
+	public UserResisterForm setUpForm() {
+		return new UserResisterForm();
+	}
 	
 	@Autowired
 	private ResisterUserService service;
@@ -30,7 +35,7 @@ public class ResisterUserController {
 	 */
 	@RequestMapping("/show-resister")
 	public String showResister() {
-		return "resister_user";
+		return "register_user";
 	}
 	
 	/**
@@ -42,11 +47,15 @@ public class ResisterUserController {
 	 */
 	@RequestMapping("/resister-user")
 	public String resisterUser(UserResisterForm form) {
+		System.out.println("------------------------");
+		System.out.println(form);
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
+		System.out.println("------------------------");
+		System.out.println(user);
 //		パスワードと確認用パスワードが一致していなければエラーメッセージを出す記述をする
-		if(user.getPassword().equals(form.getConfirmPassword())) {
-			return null;
+		if(!(user.getPassword().equals(form.getConfirmPassword()))) {
+			return "resister_user";
 		}
 		service.insert(user);
 		return "login";
