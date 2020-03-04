@@ -20,11 +20,13 @@
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<h3 class="text-center">注文内容確認</h3>
+
+				<div th:each="order:${orderList}">
 				<table class="table table-striped">
-					<tbody>
+					<tbody th:each="orderItem:${order.orderItemList}">
 						<tr>
 							<th>
-								<div class="text-center">
+								<div class="text-center" th:text="${orderItem.item.name}">
 									商品名
 								</div>
 							</th>
@@ -121,9 +123,11 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</div>
+				</div>
+				</div>
 
+		
+    
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
@@ -168,7 +172,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input id="zipcode" type="text" size="7">&nbsp;&nbsp;<button type="button" id="get_address_btn">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -178,7 +182,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" id="address">
 								</td>
 							</tr>
 							<tr>
@@ -317,15 +321,18 @@
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
-						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
+						<input id="order" class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
+
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- <script th:src="@{/js/bootstrap.min.js}"></script> -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script th:src="@{/js/get_address.js}"></script>
 </body>
 </html>
