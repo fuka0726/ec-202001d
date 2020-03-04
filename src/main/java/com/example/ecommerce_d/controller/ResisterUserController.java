@@ -28,7 +28,7 @@ public class ResisterUserController {
 	 * 
 	 * @return ユーザー登録画面
 	 */
-	@RequestMapping("show-resister")
+	@RequestMapping("/show-resister")
 	public String showResister() {
 		return "resister_user";
 	}
@@ -40,7 +40,7 @@ public class ResisterUserController {
 	 * @return パスワードと確認用パスワードが一致していれば、ログイン画面。
 	 *		　　そうでなければ、登録画面。
 	 */
-	@RequestMapping("resister-user")
+	@RequestMapping("/resister-user")
 	public String resisterUser(UserResisterForm form) {
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
