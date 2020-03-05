@@ -2,9 +2,9 @@ package com.example.ecommerce_d.domain;
 
 import java.util.List;
 
-
 /**
  * 注文商品テーブルを表すドメインです.
+ * 
  * @author fuka
  *
  */
@@ -23,7 +23,7 @@ public class OrderItem {
 	private Item item;
 	/** トッピングリスト */
 	private List<OrderTopping> orderToppingList;
-	
+
 	/**
 	 * 注文アイテムの小計を計算します.
 	 * 
@@ -32,13 +32,13 @@ public class OrderItem {
 	public int getSubTotal() {
 		int subTotal = 0;
 		int orderToppingTotal = 0;
-		if(this.size.equals('M')){
-			for(OrderTopping orderTopping : this.orderToppingList) {
+		if (this.size.equals('M')) {
+			for (OrderTopping orderTopping : this.orderToppingList) {
 				orderToppingTotal += orderTopping.getTopping().getPriceM();
 			}
 			subTotal = orderToppingTotal + this.item.getPriceM();
-		}else if(this.size.equals('L')) {
-			for(OrderTopping orderTopping : this.orderToppingList) {
+		} else if (this.size.equals('L')) {
+			for (OrderTopping orderTopping : this.orderToppingList) {
 				orderToppingTotal += orderTopping.getTopping().getPriceL();
 			}
 			subTotal = orderToppingTotal + this.item.getPriceL();
@@ -107,5 +107,5 @@ public class OrderItem {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
-	
+
 }
