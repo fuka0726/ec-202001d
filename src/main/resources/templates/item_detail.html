@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<span th:include="header::frag_header"></span>
+<div th:include="header::frag_header"></div>
 
 		<form action="cart_list.html" method="post" th:action="@{/showItemDetail}" th:object="${AddItemForm}">
 		<div class="row">
@@ -147,8 +147,6 @@
 			</div>
 		</div>
 		</form>
-
-	</div>
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

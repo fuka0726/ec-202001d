@@ -51,17 +51,17 @@ public class LoginLogoutController {
 		if (user == null) {
 			model.addAttribute("error", "メールアドレス、またはパスワードが間違っています");
 			return toLogin();
-		} else if (session.getAttribute("name") == null) {
-			session.setAttribute("name", user.getName());
+		} else if (session.getAttribute("user") == null) { //userのidをパラメータで使用するためUserオブジェクトをセットしました
+			session.setAttribute("user", user); 
 		}
 		
-		return "item_list_toy";
+		return "redirect:/showItemList";
 	}
 
 	@RequestMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "item_list_toy";
+		return "login"; //login画面に遷移するように修正しました
 	}
 
 }
