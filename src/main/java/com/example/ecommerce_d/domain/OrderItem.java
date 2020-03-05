@@ -24,6 +24,11 @@ public class OrderItem {
 	/** トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 	
+	/**
+	 * 注文アイテムの小計を計算します.
+	 * 
+	 * @return
+	 */
 	public int getSubTotal() {
 		return 0;
 	}
