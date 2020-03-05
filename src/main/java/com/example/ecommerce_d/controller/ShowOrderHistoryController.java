@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_d.domain.Order;
-import com.example.ecommerce_d.service.ShowOrderHistoryService;
+import com.example.ecommerce_d.service.JoinShowOrderHistoryService;
+//5つテーブルをジョインするためコメントアウトしました
+//import com.example.ecommerce_d.service.ShowOrderHistoryService;
 
 /**
  * 注文履歴を表示するコントローラ.
@@ -20,8 +22,12 @@ import com.example.ecommerce_d.service.ShowOrderHistoryService;
 @RequestMapping("")
 public class ShowOrderHistoryController {
 
+//	5つテーブルをジョインするためコメントアウトしました
+//	@Autowired
+//	private ShowOrderHistoryService service;
+	
 	@Autowired
-	private ShowOrderHistoryService service;
+	private JoinShowOrderHistoryService service;
 
 	/**
 	 * 注文履歴を表示します.
