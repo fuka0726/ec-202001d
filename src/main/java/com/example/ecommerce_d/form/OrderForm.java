@@ -35,24 +35,15 @@ public class OrderForm {
 	/** 宛先TEL */
 	private String destinationTel;
 	/** 配達時間 */
-	private java.sql.Timestamp deliveryTime;
+	private String deliveryTime;
+	/** 配達日時 */
+	private String deliveryDate;
 	/** 支払方法 */
 	private Integer paymentMethod;
 	/** ユーザ */
 	private User user;
 	/** 注文リスト */
 	private List<OrderItem> orderItemList;
-
-
-
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
-				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
-				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
-				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
-	}
 
 	public Integer getId() {
 		return id;
@@ -134,14 +125,6 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-	public java.sql.Timestamp getDeliveryTime() {
-		return deliveryTime;
-	}
-
-	public void setDeliveryTime(java.sql.Timestamp deliveryTime) {
-		this.deliveryTime = deliveryTime;
-	}
-
 	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -164,6 +147,32 @@ public class OrderForm {
 
 	public void setOrderItemList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
+	}
+
+	public String getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public String getDeliveryTime() {
+		return deliveryTime;
+	}
+
+	public void setDeliveryTime(String deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderForm [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
+				+ ", deliveryDate=" + deliveryDate + ", paymentMethod=" + paymentMethod + ", user=" + user
+				+ ", orderItemList=" + orderItemList + "]";
 	}
 
 }

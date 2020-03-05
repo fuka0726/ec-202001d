@@ -1,12 +1,13 @@
 package com.example.ecommerce_d.controller;
 
-import org.springframework.beans.BeanUtils;
+import java.sql.Date;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.form.OrderForm;
 import com.example.ecommerce_d.repository.OrderRepository;
 import com.example.ecommerce_d.repository.UserRepository;
@@ -42,11 +43,17 @@ public class OrderController {
 	 */
 	@RequestMapping("/completeOrder")
 	public String completeOrder(OrderForm form) {
-		Order order = new Order();
-		BeanUtils.copyProperties(form,order);
-		order.setDeliveryTime(form.getDeliveryTime());
-		orderRepository.updateStatus(order);
-		userRepository.update(order);
+		Date date = Date.valueOf(form.getDeliveryDate());
+		LocalDate localdate = date.toLocalDate();
+		System.out.println(localdate);
+		System.out.println(form.getDeliveryTime());
+        
+      
+//		Order order = new Order();
+//		BeanUtils.copyProperties(form,order);
+//		order.setDeliveryTime(form.getDeliveryTime());
+//		orderRepository.updateStatus(order);
+//		userRepository.update(order);
 		return"order_finished";
 	}
 	
