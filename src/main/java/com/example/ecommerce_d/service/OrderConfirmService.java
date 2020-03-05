@@ -38,7 +38,7 @@ public class OrderConfirmService {
 	 * @return 注文リスト
 	 */
 	public List<Order> showOrderedList(Integer userId) {
-		List<Order> orderList = orderRepository.findByUserIdAndStatus(userId, 0);
+		List<Order> orderList = orderRepository.findListByUserIdAndStatus(userId, 0);
 		return orderList;
 	}
 
@@ -49,7 +49,7 @@ public class OrderConfirmService {
 	 * @return 注文商品リスト
 	 */
 	public List<OrderItem> showOrderedItemList(Integer orderId) {
-		List<OrderItem> orderItemList = orderItemRepository.findByOrderId(orderId);
+		List<OrderItem> orderItemList = orderItemRepository.findListByOrderId(orderId);
 		return orderItemList;
 	}
 
