@@ -13,7 +13,7 @@ public class ShoppingCartController {
 
 	@Autowired
 	private ShoppingCartService service;
-	
+
 	/**
 	 * 
 	 * 
@@ -22,17 +22,24 @@ public class ShoppingCartController {
 	 */
 	@RequestMapping("/show-cart")
 	public String showCartList(Integer userId) {
-		
+
 		return "cart_list";
 	}
-	
+
 	public String addItem(AddItemForm form, Integer userId) {
 		service.addItem(form, userId);
 		return "cart-list";
 	}
-	
-//	public String removeOrderItem(Integer orderItemId) {
-//		service.removeOrderItem(orderItemId);
-//		return "cart-list";
-//	}
+
+	/**
+	 * 注文アイテムIDに紐づく注文アイテムと注文トッピングをカートから除きます.
+	 * 
+	 * @param orderItemId 注文アイテムID
+	 * @return ショッピングカートリスト
+	 */
+	@RequestMapping("/remove-order-item")
+	public String removeOrderItem(Integer orderItemId) {
+		service.removeOrderItemAndOrderTopping(orderItemId);
+		return "cart-list";
+	}
 }
