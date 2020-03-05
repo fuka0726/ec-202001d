@@ -16,7 +16,7 @@
 
 <span th:include="header::frag_header"></span>
 
-		<form action="cart_list.html">
+		<form action="cart_list.html" method="post" th:action="@{/showItemDetail}" th:object="${AddItemForm}">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 
@@ -28,9 +28,9 @@
 
 					<div class="col-xs-5">
 						<div class="bs-component">
-							<h4>じゃがバターベーコン</h4> <br>
+							<h4 th:text="${item.name}">じゃがバターベーコン</h4> <br>
 							<br>
-							<p>マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
+							<p th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
 						</div>
 					</div>
 				</div><br>
@@ -45,7 +45,7 @@
 									<label class="radio-inline">
 										<input type="radio"
 											name="responsibleCompany" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)
+										<span class="price">&nbsp;<span th:text="M">М</span>&nbsp;</span><span th:text="${item.priceM + '円(税抜き)'}">&nbsp;&nbsp;1,380円(税抜)</span>
 									</label>
 									<label class="radio-inline">
 										<input type="radio"

@@ -1,5 +1,6 @@
 package com.example.ecommerce_d.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class ShowItemListController {
 	@RequestMapping("/showItemList")
 	public String showItemList(String searchName,Model model) {
 		List<Item> itemList = showItemListService.showItemList();
+		
 		if (searchName != null) {
 			itemList = showItemListService.searchByName(searchName);
 			model.addAttribute("itemList", itemList);
@@ -40,10 +42,36 @@ public class ShowItemListController {
 		if(itemList.size() == 0) {
 				itemList = showItemListService.showItemList();
 				model.addAttribute("errormessage", "該当する商品がありません");
-			}				
-		model.addAttribute("itemList", itemList);
+		}
+		
+		List <List<Item>> itemListList = threeItemList(itemList);
+		System.out.println(itemListList.size());
+		
+		model.addAttribute("itemListList", itemListList);
 		return "item_list_toy";
 	}
+	
+	
+	/**
+	 * 商品一覧を3×3表示するメソッド
+	 * @param itemList
+	 * @return　itemListList
+	 */
+	private List<List<Item>> threeItemList(List <Item> itemList){
+		List<List<Item>> itemListList = new ArrayList<>();
+		List <Item> threeItemList = new ArrayList<>();
+		
+		for (int i = 1; i <= itemList.size(); i++) {
+			threeItemList.add(itemList.get(i - 1));
+			
+			if (i % 3 == 0 || i == itemList.size()) {
+				itemListList.add(threeItemList);
+				threeItemList = new ArrayList<>();
+			}
+		}
+		return itemListList;
+	}
+	
 	
 	
 //	@RequestMapping("/showItemList")
