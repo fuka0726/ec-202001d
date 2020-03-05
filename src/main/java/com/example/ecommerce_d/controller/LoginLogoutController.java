@@ -39,8 +39,7 @@ public class LoginLogoutController {
 		return "login";
 	}
 
-	//カートリスト 注文へ進む→(ログインしておらず)ログイン画面に遷移した場合、ログイン後注文確認画面に遷移する。
-	//カートリストから画面遷移したかどうかは、仮で注文へ進むボタンを押した時、バリューが"1"送信される体で作成
+
 	/**
 	 * @param form ログイン画面から送られるユーザ情報.
 	 * @return ログイン画面もしくは検索リストに画面遷移
@@ -56,9 +55,6 @@ public class LoginLogoutController {
 			session.setAttribute("name", user.getName());
 		}
 		
-		if(num.equals("1")){
-			return "order_confirm";
-		}
 		return "item_list_toy";
 	}
 

@@ -13,9 +13,9 @@ import javax.validation.constraints.NotBlank;
 public class UserForm {
 
 	/** メールアドレス */
-	String email;
+	private String email;
 	/** パスワード */
-	String password;
+	private String password;
 
 	public String getEmail() {
 		return email;

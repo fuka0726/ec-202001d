@@ -79,8 +79,8 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void updateStatus(Order order) {
-		String sql = "UPDATE orders SET status = :status WHERE user_id = :userId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("status", order.getStatus()).addValue("user_id", order.getUserId());
+		String sql = "UPDATE orders SET status = :status WHERE user_id =1";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("status", order.getStatus());//.addValue("user_id", order.getUserId());
 		template.update(sql, param);
 	}
 

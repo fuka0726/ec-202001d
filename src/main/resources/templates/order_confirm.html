@@ -11,6 +11,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://storage.googleapis.com/prshim/v1/payment-shim.js"></script>
 </head>
 
  <span th:include="header::frag_header"></span>
@@ -20,11 +25,13 @@
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<h3 class="text-center">注文内容確認</h3>
+
+				<div th:each="order:${orderList}">
 				<table class="table table-striped">
-					<tbody>
+					<tbody th:each="orderItem:${order.orderItemList}">
 						<tr>
 							<th>
-								<div class="text-center">
+								<div class="text-center" th:text="${orderItem.item.name}">
 									商品名
 								</div>
 							</th>
@@ -121,9 +128,11 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</div>
+				</div>
+				</div>
 
+		
+    
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
@@ -134,7 +143,7 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html">
+		<form action="order_finished.html" th:action="@{/completeOrder}" th:object="${orderForm}" method="post">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -148,7 +157,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationName">
 								</td>
 							</tr>
 							<tr>
@@ -158,7 +167,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationEmail">
 								</td>
 							</tr>
 							<tr>
@@ -168,7 +177,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input id="zipcode" type="text" size="7" name="destinationZipcode">&nbsp;&nbsp;<button type="button" id="get_address_btn">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -178,7 +187,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" id="address" name="destinationAddress">
 								</td>
 							</tr>
 							<tr>
@@ -188,7 +197,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationTel">
 								</td>
 							</tr>
 							<tr>
@@ -205,7 +214,7 @@
 													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="name" id="name"
+												<input type="date" name="deliveryTime" id="name"
 													class="form-control input-sm" />
 											</div>
 
@@ -214,47 +223,47 @@
 											<div class="col-sm-12">
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany" checked="checked">
+														name="deliveryTime" checked="checked" value="10">
 													10時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="11">
 													11時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="12">
 													12時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="13">
 													13時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="14">
 													14時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="15">
 													15時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="16">
 													16時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="17">
 													17時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="deliveryTime" value="18">
 													18時
 												</label><br>
 											</div>
@@ -285,7 +294,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" value="1" checked="checked">
 												代金引換
 											</label>
 										</div>
@@ -303,7 +312,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" value="2" checked="checked">
 												クレジットカード
 											</label><br><br>
 										</div>
@@ -317,15 +326,19 @@
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
-						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
+						<input id="order" class="form-control btn btn-warning btn-block" type="submit"  value="この内容で注文する">
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
+
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- <script th:src="@{/js/bootstrap.min.js}"></script> -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script th:src="@{/js/get_address.js}"></script>
+  <script th:src="@{/js/payment.js}"></script>
 </body>
 </html>
