@@ -29,8 +29,11 @@ public class ShoppingCartService {
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
 
+
 	@Autowired
 	private JoinOrderRepository joinOrderRepository;
+
+
 
 	/**
 	 * ユーザーIDに紐づく注文履歴を表示します.
@@ -43,9 +46,15 @@ public class ShoppingCartService {
 		// status = 4(配送完了)のリストを表示 ← 仕様に応じて要検討
 		orderList = joinOrderRepository.findByUserIdAndStatus(userId, 0);
 		return orderList.get(0);
-		
+
 	}
 
+	/**
+	 * 注文情報を追加します.
+	 * 
+	 * @param form 詳細画面のリクエストパラメータを受け取るフォーム
+	 * @param userId　ユーザーID
+	 */
 	public void addItem(AddItemForm form, Integer userId) {
 		Order order = new Order();
 		order.setUserId(userId);
@@ -74,6 +83,15 @@ public class ShoppingCartService {
 			orderToppingRepository.insert(orderTopping);
 		}
 
+	}
+
+	/**
+	 * IDに紐づく注文アイテムと注文トッピングを注文から外します.
+	 * 
+	 * @param id ID
+	 */
+	public void removeOrderItemAndOrderTopping(Integer id) {
+		orderItemRepository.deleteByID(id);
 	}
 
 //	public void removeOrderItem(Integer orderItemId) {
