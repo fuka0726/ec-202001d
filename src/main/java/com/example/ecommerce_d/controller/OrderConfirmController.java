@@ -23,7 +23,7 @@ import com.example.ecommerce_d.repository.ToppingRepository;
 import com.example.ecommerce_d.service.OrderConfirmService;
 
 /**
- * 
+ * 注文前の商品を表示するコントローラ.
  * 
  * @author namikitsubasa
  *

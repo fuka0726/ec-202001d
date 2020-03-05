@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.domain.User;
 
 /**
@@ -84,6 +85,18 @@ public class UserRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		template.update(sql, param);
 		
+	}
+	
+	
+	/**
+	 * 注文確認画面で入力されたユーザ情報を更新.
+	 * 
+	 * @param user ユーザー情報
+	 */
+	public void update(Order order) {
+		String sql = "UPDATE users SET name = :destinationName, email = :destinationEmail, zipcode =:destinationZipcode, address =:destinationAddress, telephone =:destinationTelephone WHERE id = :id";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
 	}
 
 }
