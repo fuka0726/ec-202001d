@@ -26,8 +26,7 @@ public class OrderItemRepository {
 		orderItem.setItemId(rs.getInt("item_id"));
 		orderItem.setOrderId(rs.getInt("order_id"));
 		orderItem.setQuantity(rs.getInt("quantity"));
-		char[] charList = rs.getString("size").toCharArray();
-		orderItem.setSize(charList[0]);
+		orderItem.setSize(rs.getString("size").toCharArray()[0]);
 		return orderItem;
 	};
 
@@ -45,6 +44,18 @@ public class OrderItemRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 		List<OrderItem> orderItemList = template.query(sql, param, ORDER_ITEM_ROWMAPPER);
 		return orderItemList;
+	}
+	
+	/**
+	 * IDに紐づく注文アイテムと注文トッピングを削除します.
+	 * 
+	 * @param id
+	 */
+	public void deleteByID(Integer id) {
+		String sql = "WITH deleted AS (DELETE FROM order_items WHERE id = :id RETURNING id) " 
+				+ "DELETE FROM order_toppings WHERE order_item_id IN (SELECT id FROM deleted)";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		template.update(sql, param);
 	}
 
 }
