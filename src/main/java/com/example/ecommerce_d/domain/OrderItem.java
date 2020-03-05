@@ -30,7 +30,20 @@ public class OrderItem {
 	 * @return
 	 */
 	public int getSubTotal() {
-		return 0;
+		int subTotal = 0;
+		int orderToppingTotal = 0;
+		if(this.size.equals('M')){
+			for(OrderTopping orderTopping : this.orderToppingList) {
+				orderToppingTotal += orderTopping.getTopping().getPriceM();
+			}
+			subTotal = orderToppingTotal + this.item.getPriceM();
+		}else if(this.size.equals('L')) {
+			for(OrderTopping orderTopping : this.orderToppingList) {
+				orderToppingTotal += orderTopping.getTopping().getPriceL();
+			}
+			subTotal = orderToppingTotal + this.item.getPriceL();
+		}
+		return subTotal * this.quantity;
 	}
 
 	public Integer getId() {
