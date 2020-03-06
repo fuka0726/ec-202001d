@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.form.OrderForm;
 import com.example.ecommerce_d.repository.OrderRepository;
-import com.example.ecommerce_d.repository.UserRepository;
 import com.example.ecommerce_d.service.OrderConfirmService;
 
 /**
