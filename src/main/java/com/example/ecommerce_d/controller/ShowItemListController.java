@@ -64,7 +64,7 @@ public class ShowItemListController {
 		itemList = itemRepository.findAll(offset);
 		
 		List <List<Item>> itemListList = threeItemList(itemList);
-		System.out.println(itemListList.size());
+//		System.out.println(itemListList.size());
 		
 		model.addAttribute("itemListList", itemListList);
 		return "item_list_toy";
