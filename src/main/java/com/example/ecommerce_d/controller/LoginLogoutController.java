@@ -34,7 +34,7 @@ public class LoginLogoutController {
 	 * 
 	 * @return ログイン画面へ画面遷移
 	 */
-	@RequestMapping("/tologin")
+	@RequestMapping("/toLogin")
 	public String toLogin() {
 		return "login";
 	}
