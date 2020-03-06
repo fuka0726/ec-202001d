@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ecommerce_d.domain.Item;
 import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.domain.OrderItem;
 import com.example.ecommerce_d.domain.OrderTopping;
 import com.example.ecommerce_d.form.AddItemForm;
+import com.example.ecommerce_d.repository.ItemRepository;
 import com.example.ecommerce_d.repository.JoinOrderRepository;
 import com.example.ecommerce_d.repository.OrderItemRepository;
 import com.example.ecommerce_d.repository.OrderRepository;
@@ -28,6 +30,9 @@ public class ShoppingCartService {
 
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
+	
+	@Autowired
+	private ItemRepository itemRepository;
 
 
 	@Autowired
@@ -45,8 +50,9 @@ public class ShoppingCartService {
 		List<Order> orderList = new ArrayList<>();
 		// status = 4(配送完了)のリストを表示 ← 仕様に応じて要検討
 		orderList = joinOrderRepository.findByUserIdAndStatus(userId, 0);
-		return orderList.get(0);
-
+		Order order = orderList.get(0);
+		
+		return order;
 	}
 
 	/**
@@ -73,16 +79,45 @@ public class ShoppingCartService {
 		orderItem.setOrderId(order.getId());
 		orderItem.setSize(form.getSize().toCharArray()[0]);
 		orderItem.setQuantity(Integer.parseInt(form.getQuantity()));
-
 		orderItem = orderItemRepository.insert(orderItem);
+		
+		Item item = itemRepository.load(orderItem.getItemId());
+		System.out.println("--------------------");
+		System.out.println(orderItem.getSize());
+		if(orderItem.getSize().equals('M')) {
+			int itemTotalPrice = item.getPriceM() * orderItem.getQuantity();
+			int nowTotalPrice = order.getTotalPrice();
+			order.setTotalPrice(itemTotalPrice + nowTotalPrice);
+			orderRepository.updateTotalPrice(order);
+		}else if(orderItem.getSize().equals('L')){
+			int itemTotalPrice = item.getPriceL() * orderItem.getQuantity();
+			int nowTotalPrice = order.getTotalPrice();
+			order.setTotalPrice(itemTotalPrice + nowTotalPrice);
+			orderRepository.updateTotalPrice(order);
+		}
 
 		List<Integer> tooppingIntegerList = form.getTopping();
-		for (Integer toppingId : tooppingIntegerList) {
-			OrderTopping orderTopping = new OrderTopping();
-			orderTopping.setOrderItemId(orderItem.getId());
-			orderTopping.setToppingId(toppingId);
-			orderToppingRepository.insert(orderTopping);
+		if(form.getTopping() != null) {
+			for (Integer toppingId : tooppingIntegerList) {
+				OrderTopping orderTopping = new OrderTopping();
+				orderTopping.setOrderItemId(orderItem.getId());
+				orderTopping.setToppingId(toppingId);
+				orderToppingRepository.insert(orderTopping);
+				
+				if(orderItem.getSize().equals('M')) {
+					int toppingTotalPrice = tooppingIntegerList.size() * 200;
+					int nowTotalPrice = order.getTotalPrice();
+					order.setTotalPrice(toppingTotalPrice + nowTotalPrice);
+					orderRepository.updateTotalPrice(order);
+				}else if(orderItem.getSize().equals('L')) {
+					int toppingTotalPrice = tooppingIntegerList.size() * 300;
+					int nowTotalPrice = order.getTotalPrice();
+					order.setTotalPrice(toppingTotalPrice + nowTotalPrice);
+					orderRepository.updateTotalPrice(order);
+				}
+			}
 		}
+		
 
 	}
 

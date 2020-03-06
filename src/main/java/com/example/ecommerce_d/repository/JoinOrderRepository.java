@@ -122,8 +122,8 @@ public class JoinOrderRepository {
 				+ "B.quantity B_quantity, B.size B_size, C.id C_id, C.name C_name, C.description C_description, C.price_m C_price_m, C.price_l "
 				+ "C_price_l, C.image_path C_image_path, C.deleted C_deleted, D.id D_id, D.topping_id D_topping_id, D.order_item_id D_order_item_id, "
 				+ "E.id E_id, E.name E_name, E.price_m E_price_m, E.price_l E_price_l "
-				+ "FROM orders A LEFT OUTER JOIN order_items B ON A.id = B.order_id INNER JOIN items C  ON B.item_id = C.id  "
-				+ "LEFT OUTER JOIN order_toppings D ON B.id = D.order_item_id INNER JOIN toppings E ON D.topping_id = E.id "
+				+ "FROM orders A FULL OUTER JOIN order_items B ON A.id = B.order_id FULL OUTER JOIN items C  ON B.item_id = C.id  "
+				+ "FULL OUTER JOIN order_toppings D ON B.id = D.order_item_id FULL OUTER JOIN toppings E ON D.topping_id = E.id "
 				+ "WHERE A.user_id = :userId AND A.status = :status ORDER BY A_id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);

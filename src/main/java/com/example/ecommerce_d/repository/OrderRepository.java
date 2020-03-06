@@ -129,9 +129,15 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void updateStatus(Order order) {
-		String sql = "UPDATE orders SET status = :status,payment_method =:status,destination_name =:destinationName,destination_email =:destinationEmail,destination_zipcode =:destinationZipcode,destination_address =:destinationAddress,destination_tel =:destinationTel,delivery_time=:deliveryTime WHERE user_id =1";
+		String sql = "UPDATE orders SET status = :status,payment_method =:status,destination_name =:destinationName,destination_email =:destinationEmail,destination_zipcode =:destinationZipcode,destination_address =:destinationAddress,destination_tel =:destinationTel,delivery_time=:deliveryTime WHERE user_id = :userId";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 //		SqlParameterSource param = new MapSqlParameterSource().addValue("status", order.getPaymentMethod()).addValue("payment_method", order.getPaymentMethod());//.addValue("user_id", order.getUserId());
+		template.update(sql, param);
+	}
+	
+	public void updateTotalPrice(Order order) {
+		String sql = "UPDATE orders SET total_price = :totalPrice WHERE id = :id ;";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}
 
