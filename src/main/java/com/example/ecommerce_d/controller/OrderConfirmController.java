@@ -56,7 +56,6 @@ public class OrderConfirmController {
 	@RequestMapping("/orderConfirm")
 	public String orderConfirm(Integer userId,Model model) {
 		List<Order> orderList=orderConfirmService.showOrderedList(1);
-		System.out.println(orderList);
 		model.addAttribute("orderList",orderList);
 		
 		return "order_confirm";
@@ -82,6 +81,7 @@ public class OrderConfirmController {
 		}
 			
 		if(resultset.hasErrors()) {
+			System.out.println("aaa");
 			return orderConfirm(userId,model);
 		}
 		Date date = Date.valueOf(form.getDeliveryDate());
