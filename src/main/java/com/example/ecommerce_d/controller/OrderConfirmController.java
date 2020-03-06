@@ -36,9 +36,9 @@ public class OrderConfirmController {
 	private OrderConfirmService orderConfirmService;
 
 	@Autowired
-	private OrderRepository orderRepository;
+	private OrderConfirmService orderConfirmRepository;
 	
-	@Autowired
+
 	
 	@ModelAttribute
 	public OrderForm OrderForm() {
@@ -81,7 +81,7 @@ public class OrderConfirmController {
 		}
 			
 		if(resultset.hasErrors()) {
-			System.out.println("aaa");
+			System.out.println(resultset);
 			return orderConfirm(userId,model);
 		}
 		Date date = Date.valueOf(form.getDeliveryDate());
@@ -100,7 +100,7 @@ public class OrderConfirmController {
 			order.setStatus(2);
 		}
 		System.out.println(order.getPaymentMethod());
-		orderRepository.updateStatus(order);
+		orderConfirmRepository.updateStatus(order); //ユーザーidを最終的には変数に変更(orderconfirmservie)
 //		userRepository.update(order);
 		return"redirect:/tocomplete";
 	}
