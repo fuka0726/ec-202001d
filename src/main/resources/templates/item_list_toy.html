@@ -70,6 +70,14 @@
 			</div>
 		</div>
 	</div>
+	
+	<div th:each="num,status:${numList}" style="display:inline-block;dispolay:inline">
+	<form th:action="@{/showItemList}" method="post">
+	<input type="hidden" th:value="${num}" name="getOffset">
+    <button><span th:text="${status.count}"></span></button>
+	</form>
+	</div>
+	
 	<!-- end container -->
 	<!-- <script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->

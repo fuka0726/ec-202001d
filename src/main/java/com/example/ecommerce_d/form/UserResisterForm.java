@@ -2,6 +2,7 @@ package com.example.ecommerce_d.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * ユーザー登録をする上でのリクエストパラメータを受け取るフォーム.
@@ -18,7 +19,7 @@ public class UserResisterForm {
 	@Email(message="アドレスが不正です")
 	private String email;
 	/** 郵便番号 */
-	@NotBlank(message="郵便番号を入力してください")
+	@Pattern(regexp = "^[0-9]{7}$",message="7桁の数字を入力してください(ハイフンなし)")
 	private String zipcode;
 	/** 住所 */
 	@NotBlank(message="住所を入力してください")
