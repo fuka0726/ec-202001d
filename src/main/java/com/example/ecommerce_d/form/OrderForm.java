@@ -1,7 +1,12 @@
 package com.example.ecommerce_d.form;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.example.ecommerce_d.domain.OrderItem;
 import com.example.ecommerce_d.domain.User;
@@ -25,34 +30,32 @@ public class OrderForm {
 	/** 注文日 */
 	private Date orderDate;
 	/** 宛先氏名 */
+	@NotBlank(message="お名前を入力して下さい")
 	private String destinationName;
 	/** 宛先Eメール */
+	@NotBlank(message="メールアドレスを入力して下さい")
+	@Email(message="アドレスが不正です")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
+	@Pattern(regexp = "^[0-9]{7}$",message="7桁の数字を入力してください(ハイフンなし)")
 	private String destinationZipcode;
 	/** 宛先住所 */
+	@NotBlank(message="住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
+	@NotBlank(message="電話番号を入力してください")
 	private String destinationTel;
 	/** 配達時間 */
-	private java.sql.Timestamp deliveryTime;
+	@Pattern(regexp = "^[0-9]{7}$",message="7桁の数字を入力してください(ハイフンなし)")
+	private String deliveryTime;
+	/** 配達日時 */
+	private String deliveryDate;
 	/** 支払方法 */
 	private Integer paymentMethod;
 	/** ユーザ */
 	private User user;
 	/** 注文リスト */
 	private List<OrderItem> orderItemList;
-
-
-
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
-				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
-				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
-				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
-	}
 
 	public Integer getId() {
 		return id;
@@ -134,14 +137,6 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-	public java.sql.Timestamp getDeliveryTime() {
-		return deliveryTime;
-	}
-
-	public void setDeliveryTime(java.sql.Timestamp deliveryTime) {
-		this.deliveryTime = deliveryTime;
-	}
-
 	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -164,6 +159,32 @@ public class OrderForm {
 
 	public void setOrderItemList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
+	}
+
+	public String getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public String getDeliveryTime() {
+		return deliveryTime;
+	}
+
+	public void setDeliveryTime(String deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderForm [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
+				+ ", deliveryDate=" + deliveryDate + ", paymentMethod=" + paymentMethod + ", user=" + user
+				+ ", orderItemList=" + orderItemList + "]";
 	}
 
 }

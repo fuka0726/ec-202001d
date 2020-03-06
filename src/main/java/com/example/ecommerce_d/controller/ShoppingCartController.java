@@ -25,16 +25,29 @@ public class ShoppingCartController {
 	@RequestMapping("/show-cart")
 	public String showCartList(Integer userId,Model model) {
 //		直下1行はあとで消す。
-		userId = 1;
+		userId = 2;
 		Order order = service.showCartList(userId);
+		System.out.println(order);
 		model.addAttribute("order", order);
 		return "cart_list";
 	}
-
-	public String addItem(AddItemForm form, Integer userId) {
+	
+	/**
+	 * カートにアイテムを追加します.
+	 * 
+	 * @param form フォーム
+	 * @param userId ユーザーID
+	 * @return カート一覧画面
+	 */
+	@RequestMapping("/add-item")
+	public String addItem(AddItemForm form, Integer userId,Model model) {
+//		直下1行はあとで消す。
+		userId = 2;
+		System.out.println(form);
 		service.addItem(form, userId);
-		return "cart-list";
+		return showCartList(userId, model);
 	}
+
 
 	/**
 	 * 注文アイテムIDに紐づく注文アイテムと注文トッピングをカートから除きます.
@@ -43,8 +56,10 @@ public class ShoppingCartController {
 	 * @return ショッピングカートリスト
 	 */
 	@RequestMapping("/remove-order-item")
-	public String removeOrderItem(Integer orderItemId) {
+	public String removeOrderItem(Integer orderItemId,Model model,Integer userId) {
 		service.removeOrderItemAndOrderTopping(orderItemId);
-		return "cart-list";
+//		直下1行はあとで消す。
+		userId = 2;
+		return showCartList(userId,model);
 	}
 }

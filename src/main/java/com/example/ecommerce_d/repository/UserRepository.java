@@ -94,9 +94,10 @@ public class UserRepository {
 	 * @param user ユーザー情報
 	 */
 	public void update(Order order) {
-		String sql = "UPDATE users SET name = :destinationName, email = :destinationEmail, zipcode =:destinationZipcode, address =:destinationAddress, telephone =:destinationTelephone WHERE id = :id";
+		String sql = "UPDATE users SET name = :destinationName, email = :destinationEmail, zipcode =:destinationZipcode, address =:destinationAddress, telephone =:destinationTel WHERE id = 1";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}
+
 
 }
