@@ -1,8 +1,5 @@
 package com.example.ecommerce_d.form;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
 /**
  * 
  * ログイン情報をリクエストパラメータで受け取るformクラス.
