@@ -77,6 +77,14 @@ public class ItemRepository {
 		return itemList;
 	}
 	
+	public List<Item> findByLikeName(String name,Integer offset) {
+		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted "
+				+ " FROM items WHERE name like :name limit 6 offset :offset";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("offset", offset);
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
 	
 	public List<Item> findAll(Integer offset) {
 		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY id limit 6 offset :offset";

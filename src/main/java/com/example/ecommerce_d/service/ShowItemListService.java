@@ -41,7 +41,29 @@ public class ShowItemListService {
 		List<Item> itemList = itemRepository.findByLikeName(name);
 		return itemList;
 	}
-
 	
+	/**
+	 *
+	 * 名前から商品を曖昧検索します.(ページング用)
+	 * 
+	 * @param name 商品名
+	 * @return 検索された商品一覧
+	 */
+	public List<Item> searchByName(String name,Integer offset) {
+		List<Item> itemList = itemRepository.findByLikeName(name);
+		return itemList;
+	}
+
+	/**
+	 * 
+	 * 商品を6件表示します.
+	 * 
+	 * @param offset sql検索対象の始まりのid
+	 * @return 商品情報一覧
+	 */
+	public List<Item> showItemList(Integer offset) {
+		List<Item> itemList = itemRepository.findAll(offset);
+		return itemList;
+	}
 	
 }

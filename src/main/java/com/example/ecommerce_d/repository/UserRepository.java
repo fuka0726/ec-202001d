@@ -27,11 +27,11 @@ public class UserRepository {
 		User user = new User();
 		user.setId(rs.getInt("id"));
 		user.setName(rs.getString("name"));
-		user.setEmail("email");
-		user.setPassword("password");
-		user.setZipcode("zipcode");
-		user.setAddress("address");
-		user.setTelephone("telephone");
+		user.setEmail(rs.getString("email"));
+		user.setPassword(rs.getString("password"));
+		user.setZipcode(rs.getString("zipcode"));
+		user.setAddress(rs.getString("address"));
+		user.setTelephone(rs.getString("telephone"));
 		return user;
 
 	};

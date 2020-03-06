@@ -21,13 +21,13 @@ import com.example.ecommerce_d.service.ShowItemListService;
 @Controller
 @RequestMapping("")
 public class ShowItemListController {
-	
+
 	@Autowired
 	private ShowItemListService showItemListService;
-	
+
 	@Autowired
 	private ItemRepository itemRepository;
-	
+
 	/**
 	 * 商品一覧の表示、商品名を検索します.
 	 * 
@@ -36,53 +36,61 @@ public class ShowItemListController {
 	 * @return (検索された)商品一覧画面
 	 */
 	@RequestMapping("/showItemList")
-	public String showItemList(String searchName,Model model,String getOffset) {
-		
+	public String showItemList(String searchName, Model model, String getOffset) {
+
 		List<Item> itemList = showItemListService.showItemList();
-		
+		int offset = 0;
 		if (searchName != null) {
-			itemList = showItemListService.searchByName(searchName);
-			model.addAttribute("itemList", itemList);
-		}
-		if(itemList.size() == 0) {
-				itemList = showItemListService.showItemList();
-				model.addAttribute("errormessage", "該当する商品がありません");
-		}
+			itemList = showItemListService.searchByName(searchName, offset);
+		} 
 		
 		int listNumber = itemList.size() / 6;
 		List<Integer> numList = new ArrayList<>();
-		for (int i = 0; i < listNumber; i++) {
+		int i = 0;
+		do {
 			numList.add(i);
+			i++;
+		} while (i < listNumber);
+		
+		
+
+		if (itemList.size() == 0) {
+//				itemList = showItemListService.showItemList(offset);
+			model.addAttribute("errormessage", "該当する商品がありません");
 		}
-		
-		model.addAttribute("numList", numList);
-		
-		int offset =0;
-		if(getOffset!=null) {
+
+
+		if (getOffset != null) {
 			offset = Integer.parseInt(getOffset) * 6;
 		}
-		itemList = itemRepository.findAll(offset);
+
+			itemList = showItemListService.showItemList(offset);
 		
-		List <List<Item>> itemListList = threeItemList(itemList);
-//		System.out.println(itemListList.size());
 		
+		
+		model.addAttribute("numList", numList);
+
+		List<List<Item>> itemListList = threeItemList(itemList);
+
 		model.addAttribute("itemListList", itemListList);
 		return "item_list_toy";
 	}
 	
 	
+
 	/**
 	 * 商品一覧を3×3表示するメソッド
+	 * 
 	 * @param itemList
-	 * @return　itemListList
+	 * @return itemListList
 	 */
-	private List<List<Item>> threeItemList(List <Item> itemList){
+	private List<List<Item>> threeItemList(List<Item> itemList) {
 		List<List<Item>> itemListList = new ArrayList<>();
-		List <Item> threeItemList = new ArrayList<>();
-		
+		List<Item> threeItemList = new ArrayList<>();
+
 		for (int i = 1; i <= itemList.size(); i++) {
 			threeItemList.add(itemList.get(i - 1));
-			
+
 			if (i % 3 == 0 || i == itemList.size()) {
 				itemListList.add(threeItemList);
 				threeItemList = new ArrayList<>();
@@ -90,9 +98,7 @@ public class ShowItemListController {
 		}
 		return itemListList;
 	}
-	
-	
-	
+
 //	@RequestMapping("/showItemList")
 //	public String showItemList(Model model) {
 //		List<Item> itemList = showItemListService.showItemList();
@@ -114,7 +120,5 @@ public class ShowItemListController {
 //		
 //		
 //	}
-	
-	
-	
+
 }
