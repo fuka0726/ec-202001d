@@ -2,8 +2,10 @@ package com.example.ecommerce_d.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.form.AddItemForm;
 import com.example.ecommerce_d.service.ShoppingCartService;
 
@@ -21,8 +23,11 @@ public class ShoppingCartController {
 	 * @return カート画面
 	 */
 	@RequestMapping("/show-cart")
-	public String showCartList(Integer userId) {
-		service.showCartList(userId);
+	public String showCartList(Integer userId,Model model) {
+//		直下1行はあとで消す。
+		userId = 1;
+		Order order = service.showCartList(userId);
+		model.addAttribute("order", order);
 		return "cart_list";
 	}
 

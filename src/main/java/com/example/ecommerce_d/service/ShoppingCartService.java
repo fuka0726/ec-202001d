@@ -44,9 +44,14 @@ public class ShoppingCartService {
 	public Order showCartList(Integer userId) {
 		List<Order> orderList = new ArrayList<>();
 		// status = 4(配送完了)のリストを表示 ← 仕様に応じて要検討
+// 		おそらく、このメソッド内でorderのoフィールド変数rderItemListに要素を入れる必要がある
+//		加えて、同じようにorderItemのフィールド変数orderToppingListにも要素をいれるべき
 		orderList = joinOrderRepository.findByUserIdAndStatus(userId, 0);
+		System.out.println("--------------");
+		System.out.println(orderList);
+//		現段階でとりあえずorderList.get(0)で何も取れていない。ここをまず直す。
+		System.out.println(orderList.get(0));
 		return orderList.get(0);
-
 	}
 
 	/**
