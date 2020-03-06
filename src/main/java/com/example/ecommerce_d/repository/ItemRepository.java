@@ -76,5 +76,13 @@ public class ItemRepository {
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
 	}
+	
+	
+	public List<Item> findAll(Integer offset) {
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY id limit 6 offset :offset";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset);
+		List<Item> itemList = template.query(sql,param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
 
 }
