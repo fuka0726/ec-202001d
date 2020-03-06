@@ -58,23 +58,23 @@ public class UserRepository {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * emailを受け取ってそれを用いてuser情報を返します.
 	 * 
 	 * @param email Eメール
-	 * @return　検索結果がなければnullを、あればそのユーザー情報を返します
+	 * @return 検索結果がなければnullを、あればそのユーザー情報を返します
 	 */
 	public User findByMail(String email) {
 		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users where email = :email;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-		List<User> userList = template.query(sql, param,USER_ROW_MAPPER);
-		if(userList.size() == 0) {
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if (userList.size() == 0) {
 			return null;
 		}
 		return userList.get(0);
 	}
-	
+
 	/**
 	 * 引数でもらったユーザー情報をusersテーブルに挿入します.
 	 * 
@@ -84,10 +84,9 @@ public class UserRepository {
 		String sql = "INSERT INTO users (name,email,password,zipcode,address,telephone) VALUES(:name, :email, :password, :zipcode, :address, :telephone) ;";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		template.update(sql, param);
-		
+
 	}
-	
-	
+
 	/**
 	 * 注文確認画面で入力されたユーザ情報を更新.
 	 * 
