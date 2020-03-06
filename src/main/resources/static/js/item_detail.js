@@ -1,3 +1,5 @@
+
+//呼び出し
 $(function() {
 	console.log("開通しました");
 	calc_price();
