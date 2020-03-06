@@ -1,8 +1,5 @@
 package com.example.ecommerce_d.controller;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +17,13 @@ public class ShowItemDetailController {
 	
 	
 
+	/**
+	 * アイテムの詳細画面を表示します.
+	 * 
+	 * @param id アイテムID
+	 * @param model リクエストスコープ
+	 * @return アイテム詳細画面
+	 */
 	@RequestMapping("/showItemDetail")
 	public String showItemDetail(String id, Model model) {
 		Item item = showItemDetailService.showItemDetail(Integer.parseInt(id));

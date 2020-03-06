@@ -25,10 +25,20 @@ public class ShoppingCartController {
 		service.showCartList(userId);
 		return "cart_list";
 	}
-
+	
+	/**
+	 * カートにアイテムを追加します.
+	 * 
+	 * @param form フォーム
+	 * @param userId ユーザーID
+	 * @return カート一覧画面
+	 */
+	@RequestMapping("/add-item")
 	public String addItem(AddItemForm form, Integer userId) {
+		userId = 1;
+		System.out.println(form);
 		service.addItem(form, userId);
-		return "cart-list";
+		return "cart_list";
 	}
 
 	/**
