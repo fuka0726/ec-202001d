@@ -224,14 +224,15 @@
 											<div th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color:red"></div>					
 												<input type="date" name="deliveryDate" id="name"
 													class="form-control input-sm" th:field="*{deliveryDate}" />
+
 											</div>
 
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<label class="radio-inline">
-													<input type="radio"
-														name="deliveryTime" checked="checked" value="10">
+													<input type="radio" name="deliveryTime"
+														checked="checked" value="10">
 													10時
 												</label>
 												<label class="radio-inline">

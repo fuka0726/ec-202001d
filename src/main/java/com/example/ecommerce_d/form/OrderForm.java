@@ -46,7 +46,7 @@ public class OrderForm {
 	@NotBlank(message="電話番号を入力してください")
 	private String destinationTel;
 	/** 配達時間 */
-	@Pattern(regexp = "^[0-9] {3}-[0-9] {4}$")
+	@Pattern(regexp = "^[0-9]{7}$",message="7桁の数字を入力してください(ハイフンなし)")
 	private String deliveryTime;
 	/** 配達日時 */
 	private String deliveryDate;
