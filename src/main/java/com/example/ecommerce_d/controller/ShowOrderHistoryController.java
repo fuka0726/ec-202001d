@@ -39,11 +39,10 @@ public class ShowOrderHistoryController {
 	 * @return 注文一覧画面
 	 */
 	@RequestMapping("/show-order-history")
-	
-	public String showOrderHistory(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		// 管理者ユーザーでログインする
-		List<Order> orderList = service.showOrderHistory(loginUser.getUser().getId());
+	// 管理者ユーザーでログインする
+	public String showOrderHistory(Model model, @AuthenticationPrincipal LoginUser loginUser) {		
 		// 管理者ユーザーのログインIDを渡す
+		List<Order> orderList = service.showOrderHistory(loginUser.getUser().getId());
 		if (orderList.size() == 0) {
 			model.addAttribute("message", "注文履歴がありません");
 		}
