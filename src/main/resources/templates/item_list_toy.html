@@ -69,11 +69,10 @@
 
 			</div>
 		</div>
-	</div>
 	
 	<div th:each="num,status:${numList}" style="display:inline-block;size:30px">
 	
-	<form th:action="@{/showItemList}" method="post">
+	<form th:action="@{/}" method="post">
 	<input type="hidden" th:value="${num}" name="getOffset">
     <div style="width:10%;padding:10px;font-size:20px;"><button><span th:text="${status.count}"></span></button></div>
 	</form>
