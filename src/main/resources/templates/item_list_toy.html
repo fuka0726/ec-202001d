@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +25,7 @@
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" action="item_list_toy.html" th:action="@{/showItemList}" class="form-horizontal">
+						<form method="post" action="item_list_toy.html" th:action="@{/}" class="form-horizontal">
 							<span th:text="${errormessage}"></span>
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
@@ -69,11 +69,10 @@
 
 			</div>
 		</div>
-	</div>
 	
 	<div th:each="num,status:${numList}" style="display:inline-block;size:30px">
 	
-	<form th:action="@{/showItemList}" method="post">
+	<form th:action="@{/}" method="post">
 	<input type="hidden" th:value="${num}" name="getOffset">
     <div style="width:10%;padding:10px;font-size:20px;"><button><span th:text="${status.count}"></span></button></div>
 	</form>

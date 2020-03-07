@@ -3,10 +3,12 @@ package com.example.ecommerce_d.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.ecommerce_d.domain.LoginUser;
 import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.service.JoinShowOrderHistoryService;
 //5つテーブルをジョインするためコメントアウトしました
@@ -25,7 +27,7 @@ public class ShowOrderHistoryController {
 //	5つテーブルをジョインするためコメントアウトしました
 //	@Autowired
 //	private ShowOrderHistoryService service;
-	
+
 	@Autowired
 	private JoinShowOrderHistoryService service;
 
@@ -37,8 +39,10 @@ public class ShowOrderHistoryController {
 	 * @return 注文一覧画面
 	 */
 	@RequestMapping("/show-order-history")
-	public String showOrderHistory(Model model, String userId) {
-		List<Order> orderList = service.showOrderHistory(Integer.parseInt(userId));
+	// 管理者ユーザーでログインする
+	public String showOrderHistory(Model model, @AuthenticationPrincipal LoginUser loginUser) {		
+		// 管理者ユーザーのログインIDを渡す
+		List<Order> orderList = service.showOrderHistory(loginUser.getUser().getId());
 		if (orderList.size() == 0) {
 			model.addAttribute("message", "注文履歴がありません");
 		}

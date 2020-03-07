@@ -11,7 +11,6 @@ import com.example.ecommerce_d.domain.User;
 import com.example.ecommerce_d.form.UserResisterForm;
 import com.example.ecommerce_d.service.ResisterUserService;
 
-
 /**
  * ユーザー登録の情報制御をするコントローラークラスです.
  * 
@@ -47,6 +46,7 @@ public class ResisterUserController {
 	 */
 	@RequestMapping("/resister-user")
 	public String resisterUser(@Validated UserResisterForm form, BindingResult result) {
+		System.out.println(form.getName());
 		// パスワード確認
 		if (!(form.getPassword().equals(form.getConfirmPassword()))) {
 			result.rejectValue("password", "", "パスワードが一致していません");
@@ -57,11 +57,12 @@ public class ResisterUserController {
 		if (service.findByMail(form.getEmail()) != null) {
 			result.rejectValue("email", "", "そのメールアドレスは既に登録されています");
 		}
-		
-		if(result.hasErrors()) {
+
+		// エラーがある場合は登録画面に遷移
+		if (result.hasErrors()) {
 			return showResister();
 		}
-		
+
 //		Userオブジェクトを新たに作るかどうかが怪しい。
 //		copyPropetiesで上書きされるかどうかで書き足すかどうかが変わる。
 		User user = new User();

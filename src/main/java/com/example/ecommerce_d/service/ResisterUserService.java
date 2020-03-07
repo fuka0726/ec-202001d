@@ -1,6 +1,7 @@
 package com.example.ecommerce_d.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +21,19 @@ public class ResisterUserService {
 	@Autowired
 	private UserRepository repository;
 	
+	/** パスワードハッシュ化用のクラスをインスタンス化（＠BeanはSecurityConfigに記載） */
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	/**
 	 * repositoryのinsertメソッド呼び出します.
 	 * 
 	 * @param user ユーザー情報
 	 */
+	
 	public void insert(User user) {
+		//パスワードをハッシュ化(encode)してドメインへ保存
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		repository.insert(user);
 	}
 	

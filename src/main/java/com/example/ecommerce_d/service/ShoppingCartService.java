@@ -48,11 +48,12 @@ public class ShoppingCartService {
 	 */
 	public Order showCartList(Integer userId) {
 		List<Order> orderList = new ArrayList<>();
-		// status = 4(配送完了)のリストを表示 ← 仕様に応じて要検討
 		orderList = joinOrderRepository.findByUserIdAndStatus(userId, 0);
-		Order order = orderList.get(0);
-		
-		return order;
+		//検索結果がなければnullを返す
+		if(orderList.size()==0) {
+			return null;
+		}
+		return orderList.get(0);			
 	}
 
 	/**
