@@ -19,8 +19,6 @@
 					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> <img
 						alt="main log" src="../static/img/header_logo.png" th:src="@{/img/header_logo.png}" height="35">
 					</a>
-					<!-- ログインしている時のみ表示 -->
-					<span sec:authorize="isAuthenticated()" sec:authentication="principal.user.name">山田</span>さんがログイン中
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,8 +27,14 @@
 					<p class="navbar-text navbar-right">
 						<a href="cart_list.html" th:href="@{/show-cart}" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
 						<a href="order_history.html" th:href="@{/show-order-history}" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" th:href="@{/tologin}" class="navbar-link">ログイン</a>&nbsp;&nbsp;
-						<a href="item_list.html" th:href="@{/logout}" class="navbar-link">ログアウト</a>
+						<!-- ログインしていない時だけ表示 -->
+						<span sec:authorize="!isAuthenticated()">
+						　　<a href="login.html" th:href="@{/tologin}" class="navbar-link">ログイン</a>&nbsp;&nbsp;
+						</span>
+						<!-- ログインしている時だけ表示 -->
+						<span sec:authorize="isAuthenticated()">
+  							<a href="item_list.html" th:href="@{/logout}" class="navbar-link">ログアウト</a>
+  						</span>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->

@@ -12,7 +12,7 @@
     <![endif]-->
 </head>
 <body>
- <div th:include="headerLogRes::frag_header"></div>
+ <div th:include="header-logo::frag_header"></div>
 		
 		<!-- login form -->
 		<div class="row">
@@ -60,14 +60,14 @@
 								<label for="inputPassword">パスワード:</label>
 								<label
 									class="control-label" style="color: red" for="inputError" th:errors="*{password}">パスワードを入力してください</label>
-								<input type="text" id="inputPassword" class="form-control" name="password" th:field=*{password}
+								<input type="password" id="inputPassword" class="form-control" name="password" th:field=*{password}
 									placeholder="Password">
 							</div>
 							<div class="form-group">
 								<label for="inputConfirmationPassword">確認用パスワード:</label>
 								<label
 									class="control-label" style="color: red" for="inputError" th:errors="*{confirmPassword}">確認用パスワードを入力してください</label>
-								<input type="text" id="inputConfirmationPassword" class="form-control" name="confirmPassword" th:field=*{confirmPassword}
+								<input type="password" id="inputConfirmationPassword" class="form-control" name="confirmPassword" th:field=*{confirmPassword}
 									placeholder="Confirmation Password">
 							</div>
 							<div class="form-group">
