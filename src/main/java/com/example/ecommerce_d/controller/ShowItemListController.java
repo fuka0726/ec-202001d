@@ -86,6 +86,11 @@ public class ShowItemListController {
 		List<List<Item>> itemListList = threeItemList(itemList);
 
 		model.addAttribute("itemListList", itemListList);
+		
+		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
+				StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+				model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+		
 		return "item_list_toy";
 	}
 
