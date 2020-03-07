@@ -23,8 +23,7 @@ public class JoinShowOrderHistoryService {
 	 */
 	public List<Order> showOrderHistory(Integer userId) {
 		List<Order> orderList = new ArrayList<>();
-		// status = 4(配送完了)のリストを表示 ← 仕様に応じて要検討
-		orderList = repository.findByUserIdAndStatus(userId, 4);
+		orderList = repository.findByUserIdAndStatus(userId, 2);
 		return orderList;
 	}
 }
