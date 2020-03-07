@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_d.domain.Item;
-import com.example.ecommerce_d.repository.ItemRepository;
 import com.example.ecommerce_d.service.ShowItemListService;
 
 /**
@@ -25,7 +24,6 @@ public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
 
-
 	/**
 	 * 商品一覧の表示、商品名を検索します.
 	 * 
@@ -33,7 +31,7 @@ public class ShowItemListController {
 	 * @param model
 	 * @return (検索された)商品一覧画面
 	 */
-	@RequestMapping("/showItemList")
+	@RequestMapping("/")
 	public String showItemList(String searchName, Model model, String getOffset) {
 		List<Item> itemList = null;
 		int offset = 0;
@@ -66,23 +64,23 @@ public class ShowItemListController {
 			model.addAttribute("numList", numList);
 
 			model.addAttribute("errormessage", "該当する商品がありません");
-		} else if(searchName == null){
-		itemList = showItemListService.showItemList();
-		int listNumber = itemList.size() / 6;
-		List<Integer> numList = new ArrayList<>();
-		int i = 0;
-		do {
-			numList.add(i);
-			i++;
-		} while (i < listNumber);
-		itemList = showItemListService.showItemList(offset);
-		model.addAttribute("numList", numList);
-	}
-	
-	List<List<Item>> itemListList = threeItemList(itemList);
+		} else if (searchName == null) {
+			itemList = showItemListService.showItemList();
+			int listNumber = itemList.size() / 6;
+			List<Integer> numList = new ArrayList<>();
+			int i = 0;
+			do {
+				numList.add(i);
+				i++;
+			} while (i < listNumber);
+			itemList = showItemListService.showItemList(offset);
+			model.addAttribute("numList", numList);
+		}
 
-	model.addAttribute("itemListList",itemListList);
-	return"item_list_toy";
+		List<List<Item>> itemListList = threeItemList(itemList);
+
+		model.addAttribute("itemListList", itemListList);
+		return "item_list_toy";
 	}
 
 	/**
