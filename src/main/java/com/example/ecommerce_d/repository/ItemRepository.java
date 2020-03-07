@@ -77,6 +77,15 @@ public class ItemRepository {
 		return itemList;
 	}
 	
+	
+	/**
+	 * 
+	 * 商品名を曖昧検索します.ページング用
+	 * 
+	 * @param name　商品名
+	 * @param offset 検索開始位置
+	 * @return 商品リスト
+	 */
 	public List<Item> findByLikeName(String name,Integer offset) {
 		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted "
 				+ " FROM items WHERE name like :name limit 6 offset :offset";
@@ -86,6 +95,13 @@ public class ItemRepository {
 	}
 	
 	
+	/**
+	 * 
+	 *  商品名を全件検索します.ページング用
+	 * 
+	 * @param offset　　検索開始位置
+	 * @return　商品リスト
+	 */
 	public List<Item> findAll(Integer offset) {
 		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY id limit 6 offset :offset";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset);

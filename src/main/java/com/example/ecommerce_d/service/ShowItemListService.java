@@ -50,13 +50,13 @@ public class ShowItemListService {
 	 * @return 検索された商品一覧
 	 */
 	public List<Item> searchByName(String name,Integer offset) {
-		List<Item> itemList = itemRepository.findByLikeName(name);
+		List<Item> itemList = itemRepository.findByLikeName(name,offset);
 		return itemList;
 	}
 
 	/**
 	 * 
-	 * 商品を6件表示します.
+	 * 名前から商品を全件検索します.(ページング用)
 	 * 
 	 * @param offset sql検索対象の始まりのid
 	 * @return 商品情報一覧

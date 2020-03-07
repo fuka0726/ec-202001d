@@ -25,8 +25,6 @@ public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
 
-	@Autowired
-	private ItemRepository itemRepository;
 
 	/**
 	 * 商品一覧の表示、商品名を検索します.
@@ -37,13 +35,39 @@ public class ShowItemListController {
 	 */
 	@RequestMapping("/showItemList")
 	public String showItemList(String searchName, Model model, String getOffset) {
-
-		List<Item> itemList = showItemListService.showItemList();
+		List<Item> itemList = null;
 		int offset = 0;
-		if (searchName != null) {
+		if (getOffset != null) {
+			offset = Integer.parseInt(getOffset) * 6;
+		}
+
+		if (searchName != null && showItemListService.searchByName(searchName).size() != 0) {
+			itemList = showItemListService.searchByName(searchName);
+			int listNumber = itemList.size() / 6;
+			List<Integer> numList = new ArrayList<>();
+			int i = 0;
+			do {
+				numList.add(i);
+				i++;
+			} while (i < listNumber);
+			System.out.println(offset);
 			itemList = showItemListService.searchByName(searchName, offset);
-		} 
-		
+			model.addAttribute("numList", numList);
+		} else if (searchName != null) {
+			itemList = showItemListService.showItemList();
+			int listNumber = itemList.size() / 6;
+			List<Integer> numList = new ArrayList<>();
+			int i = 0;
+			do {
+				numList.add(i);
+				i++;
+			} while (i < listNumber);
+			itemList = showItemListService.showItemList(offset);
+			model.addAttribute("numList", numList);
+
+			model.addAttribute("errormessage", "該当する商品がありません");
+		} else if(searchName == null){
+		itemList = showItemListService.showItemList();
 		int listNumber = itemList.size() / 6;
 		List<Integer> numList = new ArrayList<>();
 		int i = 0;
@@ -51,32 +75,15 @@ public class ShowItemListController {
 			numList.add(i);
 			i++;
 		} while (i < listNumber);
-		
-		
-
-		if (itemList.size() == 0) {
-//				itemList = showItemListService.showItemList(offset);
-			model.addAttribute("errormessage", "該当する商品がありません");
-		}
-
-
-		if (getOffset != null) {
-			offset = Integer.parseInt(getOffset) * 6;
-		}
-
-			itemList = showItemListService.showItemList(offset);
-		
-		
-		
+		itemList = showItemListService.showItemList(offset);
 		model.addAttribute("numList", numList);
-
-		List<List<Item>> itemListList = threeItemList(itemList);
-
-		model.addAttribute("itemListList", itemListList);
-		return "item_list_toy";
 	}
 	
-	
+	List<List<Item>> itemListList = threeItemList(itemList);
+
+	model.addAttribute("itemListList",itemListList);
+	return"item_list_toy";
+	}
 
 	/**
 	 * 商品一覧を3×3表示するメソッド
