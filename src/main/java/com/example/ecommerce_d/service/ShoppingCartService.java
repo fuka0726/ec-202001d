@@ -33,7 +33,7 @@ public class ShoppingCartService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
-
+	
 
 	@Autowired
 	private JoinOrderRepository joinOrderRepository;
@@ -53,7 +53,20 @@ public class ShoppingCartService {
 		if(orderList.size()==0) {
 			return null;
 		}
-		return orderList.get(0);			
+		Order order = orderList.get(0);
+		List<OrderItem> orderItemList = order.getOrderItemList();
+		for(OrderItem orderItem: orderItemList) {
+			Item item = itemRepository.load(orderItem.getItemId());
+			orderItem.setItem(item);
+			List<OrderTopping> orderToppingList = orderToppingRepository.findByOrderId(orderItem.getId());
+			orderItem.setOrderToppingList(orderToppingList);
+			int totalPriceNow = order.getTotalPrice();
+			int orderItemTotalPrice = orderItem.getSubTotal();
+			order.setTotalPrice(totalPriceNow + orderItemTotalPrice);
+		}
+		System.out.println("------------------------");
+		System.out.println(order);
+		return order;		
 	}
 
 	/**
@@ -67,6 +80,8 @@ public class ShoppingCartService {
 		order.setUserId(userId);
 		order.setStatus(0);
 		order.setTotalPrice(0);
+		System.out.println("-----------");
+		System.out.println(form.getTopping());
 
 		if (orderRepository.findByUserIdAndStatus(userId, 0) == null) {
 			order = orderRepository.insert(order);
@@ -82,20 +97,18 @@ public class ShoppingCartService {
 		orderItem.setQuantity(Integer.parseInt(form.getQuantity()));
 		orderItem = orderItemRepository.insert(orderItem);
 		
-		Item item = itemRepository.load(orderItem.getItemId());
-		System.out.println("--------------------");
-		System.out.println(orderItem.getSize());
-		if(orderItem.getSize().equals('M')) {
-			int itemTotalPrice = item.getPriceM() * orderItem.getQuantity();
-			int nowTotalPrice = order.getTotalPrice();
-			order.setTotalPrice(itemTotalPrice + nowTotalPrice);
-			orderRepository.updateTotalPrice(order);
-		}else if(orderItem.getSize().equals('L')){
-			int itemTotalPrice = item.getPriceL() * orderItem.getQuantity();
-			int nowTotalPrice = order.getTotalPrice();
-			order.setTotalPrice(itemTotalPrice + nowTotalPrice);
-			orderRepository.updateTotalPrice(order);
-		}
+		
+//		if(orderItem.getSize().equals('M')) {
+//			int itemTotalPrice = item.getPriceM() * orderItem.getQuantity();
+//			int nowTotalPrice = order.getTotalPrice();
+//			order.setTotalPrice(itemTotalPrice + nowTotalPrice);
+//			orderRepository.updateTotalPrice(order);
+//		}else if(orderItem.getSize().equals('L')){
+//			int itemTotalPrice = item.getPriceL() * orderItem.getQuantity();
+//			int nowTotalPrice = order.getTotalPrice();
+//			order.setTotalPrice(itemTotalPrice + nowTotalPrice);
+//			orderRepository.updateTotalPrice(order);
+//		}
 
 		List<Integer> tooppingIntegerList = form.getTopping();
 		if(form.getTopping() != null) {
@@ -105,17 +118,17 @@ public class ShoppingCartService {
 				orderTopping.setToppingId(toppingId);
 				orderToppingRepository.insert(orderTopping);
 				
-				if(orderItem.getSize().equals('M')) {
-					int toppingTotalPrice = tooppingIntegerList.size() * 200;
-					int nowTotalPrice = order.getTotalPrice();
-					order.setTotalPrice(toppingTotalPrice + nowTotalPrice);
-					orderRepository.updateTotalPrice(order);
-				}else if(orderItem.getSize().equals('L')) {
-					int toppingTotalPrice = tooppingIntegerList.size() * 300;
-					int nowTotalPrice = order.getTotalPrice();
-					order.setTotalPrice(toppingTotalPrice + nowTotalPrice);
-					orderRepository.updateTotalPrice(order);
-				}
+//				if(orderItem.getSize().equals('M')) {
+//					int toppingTotalPrice = tooppingIntegerList.size() * 200;
+//					int nowTotalPrice = order.getTotalPrice();
+//					order.setTotalPrice(toppingTotalPrice + nowTotalPrice);
+//					orderRepository.updateTotalPrice(order);
+//				}else if(orderItem.getSize().equals('L')) {
+//					int toppingTotalPrice = tooppingIntegerList.size() * 300;
+//					int nowTotalPrice = order.getTotalPrice();
+//					order.setTotalPrice(toppingTotalPrice + nowTotalPrice);
+//					orderRepository.updateTotalPrice(order);
+//				}
 			}
 		}
 		
