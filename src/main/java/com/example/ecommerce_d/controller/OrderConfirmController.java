@@ -78,7 +78,6 @@ public class OrderConfirmController {
 		}
 		// エラーがある場合は注文確認画面に遷移
 		if (resultset.hasErrors()) {
-			System.out.println(resultset);
 			return orderConfirm(userId, model, loginUser);
 		}
 		// 配達日をSQL用のTimestamp型に変更
@@ -92,6 +91,7 @@ public class OrderConfirmController {
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
 		order.setDeliveryTime(timestamp);
+		order.setUserId(loginUser.getUser().getId());
 		// 支払方法によって入金情報を変更
 		if (order.getPaymentMethod() == 1) {
 			order.setStatus(1);
@@ -99,7 +99,7 @@ public class OrderConfirmController {
 			order.setStatus(2);
 		}
 		System.out.println(order.getPaymentMethod());
-		orderConfirmService.updateStatus(order); // ユーザーidを最終的には変数に変更(orderconfirmservie)
+		orderConfirmService.updateStatus(order); 
 //		userRepository.update(order);
 		return "redirect:/tocomplete";
 	}
