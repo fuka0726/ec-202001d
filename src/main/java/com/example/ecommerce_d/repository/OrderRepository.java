@@ -122,14 +122,13 @@ public class OrderRepository {
 		
 	}
 
-//	注文日は更新できない(なみき)　ユーザーid訂正する
 	/**
 	 * 注文時に注文状態を更新します.
 	 * 
 	 * @param order 注文情報
 	 */
 	public void updateStatus(Order order) {
-		String sql = "UPDATE orders SET status = :status,payment_method =:status,destination_name =:destinationName,destination_email =:destinationEmail,destination_zipcode =:destinationZipcode,destination_address =:destinationAddress,destination_tel =:destinationTel,delivery_time=:deliveryTime,order_date =:orderDate WHERE user_id = :userId";
+		String sql = "UPDATE orders SET status = :status,payment_method =:status,destination_name =:destinationName,destination_email =:destinationEmail,destination_zipcode =:destinationZipcode,destination_address =:destinationAddress,destination_tel =:destinationTel,delivery_time=:deliveryTime,order_date =:orderDate WHERE user_id = :userId and status=0";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 //		SqlParameterSource param = new MapSqlParameterSource().addValue("status", order.getPaymentMethod()).addValue("payment_method", order.getPaymentMethod());//.addValue("user_id", order.getUserId());
 		template.update(sql, param);

@@ -39,7 +39,6 @@ public class OrderConfirmService {
 	 * @param order お届け情報
 	 */
 	public void updateStatus(Order order) {
-		order.setUserId(2);
 		LocalDateTime ldt = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String format = ldt.format(formatter);// formatはメソッド
