@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,28 +12,30 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
- <div th:include="headerLogRes::frag_header"></div>
-		
+<body>
+	<div class="container">
+		<nav th:include="header-logo::frag_header"></nav>
 		<!-- login form -->
 		<div class="row">
-			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
+			<div
+				class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-				<!-- 以下のform th:actionはitem_lit_toyのパスに変更する-->
-					<form method="post" th:action="@{/login}" th:object="${userForm}" action="item_list.html">
+					<!-- 以下のform th:actionはitem_lit_toyのパスに変更する-->
+					<form method="post" th:action="@{/login}" th:object="${userForm}"
+						action="item_list.html">
 						<fieldset>
-							<legend>
-								ログイン
-							</legend>
-							<label
-									class="control-label" style="color: red" for="inputError" th:if="${errorMessage}" th:text="${errorMessage}">メールアドレスまたはパスワードが間違っています</label>
+							<legend> ログイン </legend>
+							<label class="control-label" style="color: red" for="inputError"
+								th:if="${errorMessage}" th:text="${errorMessage}">メールアドレスまたはパスワードが間違っています</label>
 							<div class="form-group">
-								<label for="inputEmail">メールアドレス:</label>
-								<input type="text" id="inputEmail" class="form-control" name="email" placeholder="Email">
+								<label for="inputEmail">メールアドレス:</label> <input type="text"
+									id="inputEmail" class="form-control" name="email"
+									placeholder="Email">
 							</div>
 							<div class="form-group">
-								<label for="inputPassword">パスワード:</label>
-								<input type="text" id="inputPassword" class="form-control" name="password"  placeholder="Password">
+								<label for="inputPassword">パスワード:</label> <input type="password"
+									id="inputPassword" class="form-control" name="password"
+									placeholder="Password">
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary">ログイン</button>
@@ -48,6 +51,8 @@
 				<a href="register_user.html" th:href="@{show-resister}">ユーザ登録はこちら</a>
 			</div>
 		</div>
+	</div>
+
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
