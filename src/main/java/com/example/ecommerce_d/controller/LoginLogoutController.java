@@ -41,7 +41,6 @@ public class LoginLogoutController {
 		if (error != null) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です");
 		}
-
 		return "login";
 	}
 
