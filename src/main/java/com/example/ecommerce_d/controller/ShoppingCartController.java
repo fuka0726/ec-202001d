@@ -32,11 +32,10 @@ public class ShoppingCartController {
 		// ログインユーザーがいればログインユーザーのIDで検索する
 		if (loginUser != null) {
 			userId = loginUser.getUser().getId();
-			System.out.println(userId);
 		}
-		//ショッピングカートに注文がなければメッセージを表示する
 		Order order = service.showCartList(userId);
-		if(order == null) {
+		// ショッピングカートにアイテムなければメッセージを表示する
+		if (order == null) {
 			model.addAttribute("message", "カート内に商品はありません");
 		}
 		model.addAttribute("order", order);

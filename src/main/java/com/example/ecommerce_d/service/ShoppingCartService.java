@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ecommerce_d.domain.Item;
 import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.domain.OrderItem;
 import com.example.ecommerce_d.domain.OrderTopping;
 import com.example.ecommerce_d.form.AddItemForm;
-import com.example.ecommerce_d.repository.ItemRepository;
 import com.example.ecommerce_d.repository.JoinOrderRepository;
 import com.example.ecommerce_d.repository.OrderItemRepository;
 import com.example.ecommerce_d.repository.OrderRepository;
@@ -30,15 +28,13 @@ public class ShoppingCartService {
 
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
-	
-	@Autowired
-	private ItemRepository itemRepository;
-	
+
+//	エンティティで計算するためコメントアウトしました
+//	@Autowired
+//	private ItemRepository itemRepository;
 
 	@Autowired
 	private JoinOrderRepository joinOrderRepository;
-
-
 
 	/**
 	 * ユーザーIDに紐づく注文履歴を表示します.
@@ -49,31 +45,32 @@ public class ShoppingCartService {
 	public Order showCartList(Integer userId) {
 		List<Order> orderList = new ArrayList<>();
 		orderList = joinOrderRepository.findByUserIdAndStatus(userId, 0);
-		//検索結果がなければnullを返す
-		if(orderList.size()==0) {
+		// 検索結果がなければnullを返す
+		if (orderList.size() == 0) {
 			return null;
 		}
 		Order order = orderList.get(0);
+		System.out.println("order=" + order);
 		List<OrderItem> orderItemList = order.getOrderItemList();
-		for(OrderItem orderItem: orderItemList) {
-			Item item = itemRepository.load(orderItem.getItemId());
-			orderItem.setItem(item);
-			List<OrderTopping> orderToppingList = orderToppingRepository.findByOrderId(orderItem.getId());
-			orderItem.setOrderToppingList(orderToppingList);
-			int totalPriceNow = order.getTotalPrice();
-			int orderItemTotalPrice = orderItem.getSubTotal();
-			order.setTotalPrice(totalPriceNow + orderItemTotalPrice);
-		}
-		System.out.println("------------------------");
-		System.out.println(order);
-		return order;		
+		System.out.println("orderItemList=" + orderItemList);
+//		エンティティで計算するためコメントアウトしました
+//		for (OrderItem orderItem : orderItemList) {
+//			Item item = itemRepository.load(orderItem.getItemId());
+//			orderItem.setItem(item);
+//			List<OrderTopping> orderToppingList = orderToppingRepository.findByOrderId(orderItem.getId());
+//			orderItem.setOrderToppingList(orderToppingList);
+//			int totalPriceNow = order.getTotalPrice();
+//			int orderItemTotalPrice = orderItem.getSubTotal();
+//			order.setTotalPrice(totalPriceNow + orderItemTotalPrice);
+//		}
+		return order;
 	}
 
 	/**
 	 * 注文情報を追加します.
 	 * 
-	 * @param form 詳細画面のリクエストパラメータを受け取るフォーム
-	 * @param userId　ユーザーID
+	 * @param form   詳細画面のリクエストパラメータを受け取るフォーム
+	 * @param userId ユーザーID
 	 */
 	public void addItem(AddItemForm form, Integer userId) {
 		Order order = new Order();
@@ -96,8 +93,7 @@ public class ShoppingCartService {
 		orderItem.setSize(form.getSize().toCharArray()[0]);
 		orderItem.setQuantity(Integer.parseInt(form.getQuantity()));
 		orderItem = orderItemRepository.insert(orderItem);
-		
-		
+
 //		if(orderItem.getSize().equals('M')) {
 //			int itemTotalPrice = item.getPriceM() * orderItem.getQuantity();
 //			int nowTotalPrice = order.getTotalPrice();
@@ -111,13 +107,13 @@ public class ShoppingCartService {
 //		}
 
 		List<Integer> tooppingIntegerList = form.getTopping();
-		if(form.getTopping() != null) {
+		if (form.getTopping() != null) {
 			for (Integer toppingId : tooppingIntegerList) {
 				OrderTopping orderTopping = new OrderTopping();
 				orderTopping.setOrderItemId(orderItem.getId());
 				orderTopping.setToppingId(toppingId);
 				orderToppingRepository.insert(orderTopping);
-				
+
 //				if(orderItem.getSize().equals('M')) {
 //					int toppingTotalPrice = tooppingIntegerList.size() * 200;
 //					int nowTotalPrice = order.getTotalPrice();
@@ -131,7 +127,6 @@ public class ShoppingCartService {
 //				}
 			}
 		}
-		
 
 	}
 
