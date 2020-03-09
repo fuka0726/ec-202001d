@@ -24,8 +24,10 @@ import com.example.ecommerce_d.domain.LoginUser;
 import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.domain.OrderItem;
 import com.example.ecommerce_d.domain.OrderTopping;
+import com.example.ecommerce_d.domain.User;
 import com.example.ecommerce_d.form.OrderForm;
 import com.example.ecommerce_d.service.OrderConfirmService;
+import com.example.ecommerce_d.service.UserDetailsServiceImpl;
 
 /**
  * 注文前の商品を表示するコントローラ.
@@ -42,6 +44,9 @@ public class OrderConfirmController {
 
 	@Autowired
     private MailSender sender;
+	
+	@Autowired
+	private UserDetailsServiceImpl userDetailsServiceImplrepository;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -60,7 +65,9 @@ public class OrderConfirmController {
 	// ログインしたユーザー情報を受け渡します
 	public String orderConfirm(Integer userId, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Order> orderList = orderConfirmService.showOrderedList(loginUser.getUser().getId());
+		User user=userDetailsServiceImplrepository.findByUserId(loginUser.getUser().getId());
 		model.addAttribute("orderList", orderList);
+		model.addAttribute("user", user);
 		return "order_confirm";
 	}
 
@@ -123,7 +130,7 @@ public class OrderConfirmController {
 	
 	
 //以下メール送付のコード
-	
+//	
 //	/**
 //	 * 
 //	 * 注文内容をメールで送る

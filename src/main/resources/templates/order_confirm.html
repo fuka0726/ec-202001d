@@ -27,6 +27,8 @@
 				<h3 class="text-center">注文内容確認</h3>
 				<h4><span sec:authentication="principal.user.name">山田</span>様の注文です</h4>
 				<div th:each="order:${orderList}">
+<!-- 			<p id="order_number" th:text="${order.id}"></p>
+				<p id="user_id" th:text="${order.userId}"></p>あとで消す 並木 -->
 				<table class="table table-striped">
 					<tbody> 
 						<tr>
@@ -111,7 +113,7 @@
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
 					<table class="table table-striped">
-						<tbody>
+						<tbody th:each="user:${user}">
 							<tr>
 								<td>
 									<div class="text-center">
@@ -119,8 +121,8 @@
 									</div>
 								</td>
 								<td>
-								<div th:errors="*{destinationName}" style="color:red"></div>
-									<input type="text" name="destinationName" th:field="*{destinationName}">
+									<div th:errors="*{destinationName}" style="color:red"></div>
+									<input type="text" th:value="${user.name}" name="destinationName" > <!-- th:field="*{destinationName}" -->
 								</td>
 							</tr>
 							<tr>
@@ -263,7 +265,7 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio"
+												<input type="radio" class="paymentMethod"
 													name="paymentMethod" value="1" checked="checked">
 												代金引換
 											</label>
@@ -281,12 +283,62 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio"
+												<input type="radio" class="paymentMethod"
 													name="paymentMethod" value="2" checked="checked">
 												クレジットカード
 											</label><br><br>
 										</div>
 									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" id="creditPayMethod">
+								<P>支払い情報</P>
+								<input type="radio" name="creditPayMethod" checked="checked">銀行振込
+								<input type="radio" name="creditPayMethod">クレジットカード<br>
+								クレジットカード番号 :<input type="text" id="card_number" name="card_number" maxlength="16"><br>
+								有効期限 :
+								<select id="card_exp_month">
+									<option>--</option>
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+								<select id="card_exp_year">
+									<option>----</option>
+									<option value="2018">2018</option>
+									<option value="2019">2019</option>
+									<option value="2020">2020</option>
+									<option value="2021">2021</option>
+									<option value="2022">2022</option>
+									<option value="2023">2023</option>
+									<option value="2024">2024</option>
+									<option value="2025">2025</option>
+									<option value="2026">2026</option>
+									<option value="2027">2027</option>
+									<option value="2028">2028</option>
+									<option value="2029">2029</option>
+									<option value="2030">2030</option>
+									<option value="2031">2031</option>
+									<option value="2032">2032</option>
+									<option value="2033">2033</option>
+									<option value="2034">2034</option>
+									<option value="2035">2035</option>
+									<option value="2036">2036</option>
+									<option value="2037">2037</option>
+									<option value="2038">2038</option>
+								</select><br>
+								カード名義人 :<input type="text" name="cardholder" maxlength="50"><br>
+								セキュリティーコード :<input type="text" id="card_cvv" name="card_cvv" maxlength="4">
 								</td>
 							</tr>
 						</tbody>
@@ -309,6 +361,7 @@
 	<!-- <script th:src="@{/js/bootstrap.min.js}"></script> -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script th:src="@{/js/get_address.js}"></script>
-  <script th:src="@{/js/payment.js}"></script>
+  <script th:src="@{/js/creditcard.js}"></script>
+  <script th:src="@{/js/creditcardApi.js}"></script>
 </body>
 </html>
