@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ピザ屋のネット注文</title>
+<title>カートの中身</title>
 <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"
 	rel="stylesheet">
 <link href="../static/css/piza.css" th:href="@{/css/piza.css}"
@@ -100,7 +100,7 @@
 					<div class="col-xs-offset-2 col-xs-8">
 						<div class="form-group text-center">
 							<span id="total-price" th:text="'消費税: ' + ${#numbers.formatInteger(order.getTax(), 1, 'COMMA')} + 円">消費税：8,000円</span><br>
-							<span id="total-price" th:text="'ご注文合計金額: ' + ${#numbers.formatInteger(order.getCalcTotalPrice(), 1, 'COMMA')} + 円">ご注文金額合計：38,000円
+							<span id="total-price" th:text="'ご注文合計金額: ' + ${#numbers.formatInteger(order.getCalcTotalPrice()+order.getTax(), 1, 'COMMA')} + 円">ご注文金額合計：38,000円
 								(税込)</span>
 						</div>
 					</div>

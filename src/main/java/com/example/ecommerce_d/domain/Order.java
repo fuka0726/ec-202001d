@@ -49,7 +49,7 @@ public class Order {
 	 * @return 消費税
 	 */
 	public int getTax() {
-		return (int) (this.totalPrice * 0.1);
+		return (int)(getCalcTotalPrice() * 0.1);
 	}
 
 	/**
@@ -58,7 +58,11 @@ public class Order {
 	 * @return 合計金額
 	 */
 	public int getCalcTotalPrice() {
-		return this.totalPrice + getTax();
+		int totalPrice = 0;
+		for (OrderItem orderItem : this.orderItemList) {
+			totalPrice += orderItem.getSubTotal();
+		}
+		return totalPrice;
 	}
 
 	@Override

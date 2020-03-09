@@ -10,7 +10,6 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_d.domain.LoginUser;
 import com.example.ecommerce_d.domain.Order;
-import com.example.ecommerce_d.domain.OrderItem;
-import com.example.ecommerce_d.domain.OrderTopping;
+import com.example.ecommerce_d.domain.User;
 import com.example.ecommerce_d.form.OrderForm;
 import com.example.ecommerce_d.service.OrderConfirmService;
+import com.example.ecommerce_d.service.ShoppingCartService;
+import com.example.ecommerce_d.service.UserDetailsServiceImpl;
 
 /**
  * 注文前の商品を表示するコントローラ.
@@ -42,6 +42,12 @@ public class OrderConfirmController {
 
 	@Autowired
     private MailSender sender;
+	
+	@Autowired
+	private UserDetailsServiceImpl userDetailsServiceImplrepository;
+	
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -60,7 +66,9 @@ public class OrderConfirmController {
 	// ログインしたユーザー情報を受け渡します
 	public String orderConfirm(Integer userId, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		List<Order> orderList = orderConfirmService.showOrderedList(loginUser.getUser().getId());
+		User user=userDetailsServiceImplrepository.findByUserId(loginUser.getUser().getId());
 		model.addAttribute("orderList", orderList);
+		model.addAttribute("user", user);
 		return "order_confirm";
 	}
 
@@ -95,10 +103,16 @@ public class OrderConfirmController {
 		LocalDateTime localDateTime = LocalDateTime.of(localdate, localTime);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		// Orderインスタンスを作成(テーブルからとってきた方が良いのかしら？）
+		//データベースの総額をアップデートするために、カートリストの商品一覧を呼ぶsql実行
+		Order ordered=shoppingCartService.showCartList(loginUser.getUser().getId());
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
+		//注文日セット
 		order.setDeliveryTime(timestamp);
+		//ユーザーidセット
 		order.setUserId(loginUser.getUser().getId());
+		//総額セット
+		order.setTotalPrice(ordered.getCalcTotalPrice()+ordered.getTax());
 		// 支払方法によって入金情報を変更
 		if (order.getPaymentMethod() == 1) {
 			order.setStatus(1);
@@ -123,7 +137,7 @@ public class OrderConfirmController {
 	
 	
 //以下メール送付のコード
-	
+//	
 //	/**
 //	 * 
 //	 * 注文内容をメールで送る
