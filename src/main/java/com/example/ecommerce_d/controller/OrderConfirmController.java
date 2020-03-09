@@ -75,7 +75,6 @@ public class OrderConfirmController {
 	 * @param loginUser 利用者ユーザー
 	 * @return 注文完了画面（リダイレクト）
 	 */
-	//TODO 注文がアップデートされない(改修済み)
 	@RequestMapping("/completeOrder")
 	public String completeOrder(@Validated OrderForm form, BindingResult resultset, Integer userId, Model model,
 			@AuthenticationPrincipal LoginUser loginUser) {

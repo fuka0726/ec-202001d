@@ -37,15 +37,13 @@ public class OrderItemRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
+
 	private SimpleJdbcInsert insert;
-	
+
 	@PostConstruct
 	public void init() {
-		SimpleJdbcInsert simpleJdbcInsert =
-				new SimpleJdbcInsert((JdbcTemplate)template.getJdbcOperations());
-		SimpleJdbcInsert withTableName =
-				simpleJdbcInsert.withTableName("order_items");
+		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
+		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("order_items");
 		insert = withTableName.usingGeneratedKeyColumns("id");
 	}
 
@@ -61,7 +59,6 @@ public class OrderItemRepository {
 		List<OrderItem> orderItemList = template.query(sql, param, ORDER_ITEM_ROWMAPPER);
 		return orderItemList;
 	}
-	
 
 	/**
 	 * IDに紐づく注文アイテムと注文トッピングを削除します.
@@ -69,25 +66,36 @@ public class OrderItemRepository {
 	 * @param id
 	 */
 	public void deleteByID(Integer id) {
-		String sql = "WITH deleted AS (DELETE FROM order_items WHERE id = :id RETURNING id) " 
+		String sql = "WITH deleted AS (DELETE FROM order_items WHERE id = :id RETURNING id) "
 				+ "DELETE FROM order_toppings WHERE order_item_id IN (SELECT id FROM deleted)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		template.update(sql, param);
 	}
-	
+
 	/**
 	 * オーダーアイテム情報をDB上に挿入します.
 	 * 
 	 * @param orderItem オーダーアイテム情報
-	 * @return　オーダーアイテム情報
+	 * @return オーダーアイテム情報
 	 */
 	public OrderItem insert(OrderItem orderItem) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		Number key = insert.executeAndReturnKey(param);
 		orderItem.setId(key.intValue());
 		return orderItem;
-		
+	}
 
+	/**
+	 * オーダーアイテムのユーザーIDを更新します.
+	 * 
+	 * @param loginOrderId
+	 * @param dummyOrderId
+	 */
+	public void updateUserId(int loginOrderId, int dummyOrderId) {
+		String sql = "UPDATE order_items SET order_id = :loginOrderId WHERE order_id = :dummyOrderId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("loginOrderId", loginOrderId)
+				.addValue("dummyOrderId", dummyOrderId);
+		template.update(sql, param);
 	}
 
 }
