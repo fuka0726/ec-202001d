@@ -37,4 +37,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return new LoginUser(user, authorityList); // 新しいエンティティを返す.
 	}
+	
+	
+	public User findByUserId(Integer userId) {
+		User user = repository.findByUserId(userId);
+		return user;
+		}
+
 }

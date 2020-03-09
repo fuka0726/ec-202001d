@@ -51,9 +51,8 @@ public class ShowItemListController {
 				numList.add(i);
 				i++;
 			} while (i < listNumber);
-			System.out.println(offset);
-			itemList = showItemListService.searchByName(searchName, offset);
 			model.addAttribute("numList", numList);
+			itemList = showItemListService.searchByName(searchName, offset);
 			//あいまい検索したが検索条件が0の場合の処理
 		} else if (searchName != null) {
 			itemList = showItemListService.showItemList();

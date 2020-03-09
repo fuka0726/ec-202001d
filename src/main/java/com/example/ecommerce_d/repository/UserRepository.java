@@ -98,5 +98,12 @@ public class UserRepository {
 		template.update(sql, param);
 	}
 
+	public User findByUserId(Integer userId) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		String sql = "select id, name , email , password , zipcode, address, telephone from users where id= :userId";
+
+		User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+		return user;
+	}
 
 }
