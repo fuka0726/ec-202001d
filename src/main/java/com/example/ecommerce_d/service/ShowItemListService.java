@@ -1,5 +1,6 @@
 package com.example.ecommerce_d.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,22 @@ public class ShowItemListService {
 	public List<Item> showItemList(Integer offset) {
 		List<Item> itemList = itemRepository.findAll(offset);
 		return itemList;
+	}
+	
+	public List<Item> showItemListOrderByCulum(String culum,Integer offset){
+		List<Item> itemList = new ArrayList<Item>();
+		if(culum.equals("1")) {
+			culum = "price_m";
+			itemList = itemRepository.findAllOrderByCulum(culum, offset);
+		}else if(culum.equals("2")) {
+			culum = "price_m DESC";
+			itemList = itemRepository.findAllOrderByCulum(culum, offset);
+		}
+		return itemList;
+	}
+	
+	public List<Item> searchByNameOrderByCulum(String name,String culum,Integer offset){
+		return itemRepository.findByLikeNameOrderByCulum(name, culum, offset);
 	}
 	
 }

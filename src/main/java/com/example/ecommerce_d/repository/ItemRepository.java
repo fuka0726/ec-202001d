@@ -108,5 +108,25 @@ public class ItemRepository {
 		List<Item> itemList = template.query(sql,param, ITEM_ROW_MAPPER);
 		return itemList;
 	}
+	
+	/**
+	 * 商品を全件検索する。その際に並び順を指定した商品情報を返す.
+	 * 
+	 * @param culum カラム名（DESCを入れることで降順に)
+	 * @param offset 検索開始位置
+	 * @return　商品情報のリスト
+	 */
+	public List<Item> findAllOrderByCulum(String culum,Integer offset){
+//		"ORDER BY :culum" の:culumに "price_l DESC"などを入れることによって昇順、降順も選択可能？
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY " + culum + " LIMIT 6 OFFSET :offset";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset);
+		return template.query(sql, param,ITEM_ROW_MAPPER);
+	}
+	
+	public List<Item>findByLikeNameOrderByCulum(String name,String culum,Integer offset){
+		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name ORDER BY " + culum + " LIMIT 6 OFFSET :offset";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset).addValue("name", "%" + name + "%");
+		return template.query(sql, param,ITEM_ROW_MAPPER);
+	}
 
 }
