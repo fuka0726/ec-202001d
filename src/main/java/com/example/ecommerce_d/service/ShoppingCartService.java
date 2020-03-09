@@ -43,6 +43,9 @@ public class ShoppingCartService {
 	 * @return 注文情報リスト
 	 */
 	public Order showCartList(Integer userId) {
+		if (userId == null) {
+			return null;
+		}
 		List<Order> orderList = new ArrayList<>();
 		orderList = joinOrderRepository.findByUserIdAndStatus(userId, 0);
 		// 検索結果がなければnullを返す
@@ -50,9 +53,6 @@ public class ShoppingCartService {
 			return null;
 		}
 		Order order = orderList.get(0);
-		System.out.println("order=" + order);
-		List<OrderItem> orderItemList = order.getOrderItemList();
-		System.out.println("orderItemList=" + orderItemList);
 //		エンティティで計算するためコメントアウトしました
 //		for (OrderItem orderItem : orderItemList) {
 //			Item item = itemRepository.load(orderItem.getItemId());
@@ -77,8 +77,6 @@ public class ShoppingCartService {
 		order.setUserId(userId);
 		order.setStatus(0);
 		order.setTotalPrice(0);
-		System.out.println("-----------");
-		System.out.println(form.getTopping());
 
 		if (orderRepository.findByUserIdAndStatus(userId, 0) == null) {
 			order = orderRepository.insert(order);

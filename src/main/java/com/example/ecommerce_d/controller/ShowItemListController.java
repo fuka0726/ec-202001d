@@ -34,14 +34,14 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(String searchName, Model model, String getOffset) {
 		List<Item> itemList = null;
-		//sql実行開始番号を初期化
+		// sql実行開始番号を初期化
 		int offset = 0;
-		//sql実行開始番号を商品検索画面のページングボタンから取得する.
+		// sql実行開始番号を商品検索画面のページングボタンから取得する.
 		if (getOffset != null) {
 			offset = Integer.parseInt(getOffset) * 6;
 		}
-		
-		//あいまい検索で検索する.
+
+		// あいまい検索で検索する.
 		if (searchName != null && showItemListService.searchByName(searchName).size() != 0) {
 			itemList = showItemListService.searchByName(searchName);
 			int listNumber = itemList.size() / 6;
@@ -53,7 +53,7 @@ public class ShowItemListController {
 			} while (i < listNumber);
 			model.addAttribute("numList", numList);
 			itemList = showItemListService.searchByName(searchName, offset);
-			//あいまい検索したが検索条件が0の場合の処理
+			// あいまい検索したが検索条件が0の場合の処理
 		} else if (searchName != null) {
 			itemList = showItemListService.showItemList();
 			int listNumber = itemList.size() / 6;
@@ -67,7 +67,7 @@ public class ShowItemListController {
 			model.addAttribute("numList", numList);
 
 			model.addAttribute("errormessage", "該当する商品がありません");
-			//あいまい検索していない場合の処理
+			// あいまい検索していない場合の処理
 		} else if (searchName == null) {
 			itemList = showItemListService.showItemList();
 			int listNumber = itemList.size() / 6;
@@ -81,15 +81,15 @@ public class ShowItemListController {
 			model.addAttribute("numList", numList);
 		}
 
-		//商品一覧を3×3表示するメソッドの呼び出し
+		// 商品一覧を3×3表示するメソッドの呼び出し
 		List<List<Item>> itemListList = threeItemList(itemList);
 
 		model.addAttribute("itemListList", itemListList);
-		
+
 		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
-				StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
-				model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
-		
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+
 		return "item_list_toy";
 	}
 
@@ -113,24 +113,24 @@ public class ShowItemListController {
 		}
 		return itemListList;
 	}
-	
+
 	@RequestMapping("/show-ordered")
-	public String showOrderedList(String searchName, Model model, String getOffset,String culum) {
+	public String showOrderedList(String searchName, Model model, String getOffset, String culum) {
 		System.out.println(searchName);
 		System.out.println(getOffset);
 		System.out.println(culum);
 		List<Item> itemList = null;
-		//sql実行開始番号を初期化
+		// sql実行開始番号を初期化
 		int offset = 0;
 		int getOffsetInt = Integer.parseInt(getOffset);
-		//sql実行開始番号を商品検索画面のページングボタンから取得する.
+		// sql実行開始番号を商品検索画面のページングボタンから取得する.
 		if (getOffsetInt == 1) {
 			offset = 0;
-		}else if(getOffsetInt >= 2) {
+		} else if (getOffsetInt >= 2) {
 			offset = (getOffsetInt - 1) * 6;
 		}
-		
-		//あいまい検索で検索する.
+
+		// あいまい検索で検索する.
 		if (searchName != null && showItemListService.searchByName(searchName).size() != 0) {
 			itemList = showItemListService.searchByName(searchName);
 			int listNumber = itemList.size() / 6;
@@ -143,7 +143,7 @@ public class ShowItemListController {
 			System.out.println(offset);
 			itemList = showItemListService.searchByNameOrderByCulum(searchName, culum, offset);
 			model.addAttribute("numList", numList);
-			//あいまい検索したが検索条件が0の場合の処理
+			// あいまい検索したが検索条件が0の場合の処理
 		} else if (searchName != null) {
 			itemList = showItemListService.showItemList();
 			int listNumber = itemList.size() / 6;
@@ -157,7 +157,7 @@ public class ShowItemListController {
 			model.addAttribute("numList", numList);
 
 			model.addAttribute("errormessage", "該当する商品がありません");
-			//あいまい検索していない場合の処理
+			// あいまい検索していない場合の処理
 		} else if (searchName == null) {
 			itemList = showItemListService.showItemList();
 			int listNumber = itemList.size() / 6;
@@ -171,16 +171,16 @@ public class ShowItemListController {
 			model.addAttribute("numList", numList);
 		}
 
-		//商品一覧を3×3表示するメソッドの呼び出し
+		// 商品一覧を3×3表示するメソッドの呼び出し
 		List<List<Item>> itemListList = threeItemList(itemList);
 
 		model.addAttribute("itemListList", itemListList);
-		
+
 		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
-				StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
-				model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
-		
-		return "item_list_toy";	
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+
+		return "item_list_toy";
 	}
 
 }
