@@ -78,7 +78,7 @@ $(function(){
 //		searchName = "";
 //		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
 		
-		document.getElementById("myForm").reset();
+		document.getElementById("reset").reset();
 	});
 	
 	
