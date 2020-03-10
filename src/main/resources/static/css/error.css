@@ -1,101 +1,47 @@
 @charset "UTF-8";
 
-.header_logo img{
-	width:200px;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 100;
-	margin: auto;
-}
-
-.num ul img{
-	display:inline-block;
-	margin:5px 2px;
-	width:200px;
-}
-
-
-/* div.num1 img{
-	width:200px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 50;
-	bottom: 100;
-	margin: auto;
-	height: 100;
-}
-
-div.num2 img{
-	width:200px;
-	position: absolute;
-	top: 0;
-	left: 50;
-	right: 0;
-	bottom: 100;
-	margin: auto;
-	height: 100;
-}
-
-div.num3 img{
-	width:200px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 100;
-	margin: auto;
-	height: 100;
-} */
-
-div.lobo img{
-	height:400px;
-	/* align-items: center;
-    display: flex; */
-    position: absolute;
-	top: 0;
-	left: 20;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	/* width: 100; */
-	
-}
-
 body {
 	background-image: url(../img/rego_back.png);
 	background-size: cover; 
 	height:200px; 
 	}
 
-/* .background-image {
-    background: url(../img/rego_back.png) no-repeat fixed left top;
-    background-size:auto 576px;
-}	  */
-	
-	
-	
-.opaque-background{
-  /* 背景画像の透過用css */
-  height: 100%; 
-  background: rgba(255,255,255,0.5);
+.header_logo img{
+	width:100px;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 100;
+	margin: auto;
 }
 
+.num-image{
+	height:100px;
+	width:100px;
+	margin:5px 2px;
+}
+
+.text-area{
+	margin-left: 100px;
+	display: inline-block;
+	float: left;
+	width: 50%;
+}
 .text{
-/*   position: absolute;
-  top:0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100px;
-  height: 50px;
-  margin: auto; */
-  font-size: 20px;
+	åfont-size: 20px
+}
+
+.robo-area{
+	display: inline-block;
+	float: left;
+	width: 40%;
+}
+
+.robot{
+	width:100%;
+	margin: auto;
 }
 
 
 
-.header {
-    padding:250px 180px 400px;
-}
+
