@@ -71,10 +71,13 @@ $(function(){
 //		getOffset = 1;
 //		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=';
 //		$("#forJSCulum").text("1");
-		culum = $("#forJSCulum").text();
-		getOffset = 1;
-		searchName = "";
-		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
+		
+//		culum = $("#forJSCulum").text();
+//		getOffset = 1;
+//		searchName = "";
+//		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
+		
+		document.getElementById("myForm").reset();
 	});
 	
 	

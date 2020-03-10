@@ -88,9 +88,9 @@ $( function() {
 								th:href="@{'/showItemDetail?id=' + ${item.id}}"> <span
 									th:text="${item.name}" >じゃがバターベーコン</span>
 							</a><br> <span class="price">&nbsp;<span th:text="M">М</span>&nbsp;
-							</span><span th:text="${item.priceM} + '円(税抜)'">&nbsp;&nbsp;1,380円(税抜)</span><br>
+							</span><span th:text="${#numbers.formatInteger(item.priceM, 2,'COMMA') + '円(税抜き)'}">&nbsp;&nbsp;1,380円(税抜)</span><br>
 								<span class="price">&nbsp;<span th:text="L">L</span>&nbsp;
-							</span><span th:text="${item.priceL} + '円(税抜)'">&nbsp;&nbsp;2,380円(税抜)</span><br>
+							</span><span th:text="${#numbers.formatInteger(item.priceL, 2,'COMMA') + '円(税抜き)'}">&nbsp;&nbsp;2,380円(税抜)</span><br>
 							</th>
 						</tr>
 					</tbody>

@@ -71,7 +71,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByLikeName(String name) {
 		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted "
-				+ " FROM items WHERE name like :name";
+				+ " FROM items WHERE name ilike :name";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
@@ -88,7 +88,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByLikeName(String name,Integer offset) {
 		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted "
-				+ " FROM items WHERE name like :name limit 6 offset :offset";
+				+ " FROM items WHERE name ILIKE :name limit 6 offset :offset";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("offset", offset);
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
@@ -118,13 +118,13 @@ public class ItemRepository {
 	 */
 	public List<Item> findAllOrderByCulum(String culum,Integer offset){
 //		"ORDER BY :culum" の:culumに "price_l DESC"などを入れることによって昇順、降順も選択可能？
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY " + culum + " LIMIT 6 OFFSET :offset";
+		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items ORDER BY " + culum + ",id LIMIT 6 OFFSET :offset";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset);
 		return template.query(sql, param,ITEM_ROW_MAPPER);
 	}
 	
 	public List<Item>findByLikeNameOrderByCulum(String name,String culum,Integer offset){
-		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name ORDER BY " + culum + " LIMIT 6 OFFSET :offset";
+		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name ORDER BY " + culum + ",id LIMIT 6 OFFSET :offset";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset).addValue("name", "%" + name + "%");
 		return template.query(sql, param,ITEM_ROW_MAPPER);
 	}
