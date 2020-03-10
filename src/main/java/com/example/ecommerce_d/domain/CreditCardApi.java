@@ -1,20 +1,26 @@
 package com.example.ecommerce_d.domain;
 
+/**
+ * 
+ * クレジットカード決済のwebapiからの情報を格納するドメイン.
+ * 
+ * @author namikitsubasa
+ *
+ */
 public class CreditCardApi {
 
-	/** ステータス */
-	private int status;
-
-	/** メッセージ */
+	private String status;
 	private String message;
+	private String error_code;
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
+
 
 	public String getMessage() {
 		return message;
@@ -22,6 +28,19 @@ public class CreditCardApi {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getError_code() {
+		return error_code;
+	}
+
+	public void setError_code(String error_code) {
+		this.error_code = error_code;
+	}
+
+	@Override
+	public String toString() {
+		return "CreditCardApi [status=" + status + ", message=" + message + ", error_code=" + error_code + "]";
 	}
 
 }

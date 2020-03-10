@@ -1,6 +1,5 @@
 package com.example.ecommerce_d.form;
 
-
 import java.sql.Date;
 import java.util.List;
 
@@ -30,23 +29,22 @@ public class OrderForm {
 	/** 注文日 */
 	private Date orderDate;
 	/** 宛先氏名 */
-	@NotBlank(message="お名前を入力して下さい")
+	@NotBlank(message = "お名前を入力して下さい")
 	private String destinationName;
 	/** 宛先Eメール */
-	@NotBlank(message="メールアドレスを入力して下さい")
-	@Email(message="アドレスが不正です")
+	@NotBlank(message = "メールアドレスを入力して下さい")
+	@Email(message = "アドレスが不正です")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
-	@Pattern(regexp = "^[0-9]{7}$",message="7桁の数字を入力してください(ハイフンなし)")
+	@Pattern(regexp = "^[0-9]{7}$", message = "7桁の数字を入力してください(ハイフンなし)")
 	private String destinationZipcode;
 	/** 宛先住所 */
-	@NotBlank(message="住所を入力して下さい")
+	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
-	@NotBlank(message="電話番号を入力してください")
+	@NotBlank(message = "電話番号を入力してください")
 	private String destinationTel;
 	/** 配達時間 */
-//	@Pattern(regexp = "^[0-9]{7}$",message="7桁の数字を入力してください(ハイフンなし)")
 	private String deliveryTime;
 	/** 配達日時 */
 	private String deliveryDate;
@@ -56,6 +54,69 @@ public class OrderForm {
 	private User user;
 	/** 注文リスト */
 	private List<OrderItem> orderItemList;
+
+	/**名義人*/
+	private String card_name;
+	/**カード番号*/
+	private String card_number;
+	/**有効期限(年)*/
+	private String card_exp_year;
+	/**有効期限(月)*/
+	private String card_exp_month;
+	/**セキュリティーコード*/
+	private String card_cvv;
+	/**クレジット決済apiのエラーメッセージ(入力値チェック用)*/
+	private String error_code;
+
+	
+	
+	public String getError_code() {
+		return error_code;
+	}
+
+	public void setError_code(String error_code) {
+		this.error_code = error_code;
+	}
+
+	public String getCard_name() {
+		return card_name;
+	}
+
+	public void setCard_name(String card_name) {
+		this.card_name = card_name;
+	}
+
+	public String getCard_number() {
+		return card_number;
+	}
+
+	public void setCard_number(String card_number) {
+		this.card_number = card_number;
+	}
+
+	public String getCard_exp_year() {
+		return card_exp_year;
+	}
+
+	public void setCard_exp_year(String card_exp_year) {
+		this.card_exp_year = card_exp_year;
+	}
+
+	public String getCard_exp_month() {
+		return card_exp_month;
+	}
+
+	public void setCard_exp_month(String card_exp_month) {
+		this.card_exp_month = card_exp_month;
+	}
+
+	public String getCard_cvv() {
+		return card_cvv;
+	}
+
+	public void setCard_cvv(String card_cvv) {
+		this.card_cvv = card_cvv;
+	}
 
 	public Integer getId() {
 		return id;

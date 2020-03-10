@@ -28,6 +28,8 @@ public class ShowItemListController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	
 
 	/**
 	 * 商品一覧の表示、商品名を検索します.
