@@ -193,6 +193,7 @@ public class ShowItemListController {
 		// オートコンプリート用にJavaScriptの配列の中身を文字列で作ってスコープへ格納
 				StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
 				model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+				System.out.println(itemListForAutocomplete);
 		
 			if(searchName == null) {
 				session.setAttribute("searchName", "商品名をいれてください");
