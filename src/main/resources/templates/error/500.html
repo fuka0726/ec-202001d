@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <link href="error.css" rel="stylesheet"> -->
 <link href="/css/error.css" th:href="@{/css/error.css}" rel="stylesheet"></link>
 </head>
 <body>
 
-<div class="background-image">
-	<div class="opaque-background">
-		<header class="header">
-<div class="header_logo"><img th:src="@{/img/header_logo.png}"></div>
-<h1>Meintenance</h1>
-		<pre class="text">
+	<div>
+		<div class="opaque-background">
+			<div class="header_logo">
+				<img th:src="@{/img/header_logo.png}">
+			</div>
+			<div class="text-area">
+				<div class="number-area">
+					<img class="num-image" th:src="@{/img/5rego.png}"> <img
+						class="num-image" th:src="@{/img/0rego.png}"> <img
+						class="num-image" th:src="@{/img/0rego.png}">
+				</div>
+				<h1>Maintenance</h1>
+				<pre class="text">
 		以下のいずれかの理由でシステムの操作を中断しました。
 
 		・不正な操作が行われた
@@ -23,18 +29,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
 		しばらく経ってからもう一度操作してください。
 		</pre>
-
-<ul class="num">
-		<li class="num1"><img th:src="@{/img/5rego.png}"></li>
-		<li class="num2"><img th:src="@{/img/0rego.png}"></li>
-		<li class="num3"><img th:src="@{/img/0rego.png}"></li>
-</ul>
-		<div class="lobo"><img th:src="@{/img/mennte.jpg}"></div>
-
-		<a th:href="@{/tologin}" class="navbar-link">ログイン画面</a>
-		 </header>
+			<a th:href="@{/tologin}" class="navbar-link">ログイン画面</a>
+			</div>
+			<div class="robo-area">
+				<img class="robot" th:src="@{/img/mennte.jpg}">
+			</div>
+		</div>
 	</div>
-</div>
 
 </body>
 </html>
