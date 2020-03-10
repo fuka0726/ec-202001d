@@ -124,7 +124,6 @@ public class ShowItemListController {
 
 	@RequestMapping("/show-ordered")
 	public String showOrderedList(String searchName, Model model, String getOffset,String culum) {
-		System.out.println("------------------------");
 		System.out.println(searchName);
 		System.out.println(getOffset);
 		System.out.println(culum);
@@ -201,6 +200,7 @@ public class ShowItemListController {
 				session.setAttribute("searchName", searchName);
 			}
 			return "item_list_toy";	
+
 
 	}
 

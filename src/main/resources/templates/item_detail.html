@@ -15,8 +15,8 @@
     <script type="text/javascript" th:src="@{/js/item_detail.js}"></script>
 </head>
 <body>
-
-<div th:include="header::frag_header"></div>
+<div class="container">
+<nav th:include="header::frag_header"></nav>
 
 		<form action="item_detail.html" method="post" th:action="@{/add-item}" >
 		<div class="row">
@@ -48,12 +48,12 @@
 									<label class="radio-inline">
 										<input type="radio"
 											name="size" checked="checked" th:value="M">
-										<span class="price">&nbsp;<span>М</span>&nbsp;</span><span id="sizeM" th:text="${item.priceM}">&nbsp;&nbsp;1,380円(税抜)</span>円(税抜き)
+										<span class="price">&nbsp;<span>М</span>&nbsp;</span><span id="sizeM" th:text="${#numbers.formatInteger(item.priceM, 2,'COMMA')}">&nbsp;&nbsp;1,380円(税抜)</span>円(税抜き)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
 											name="size"  th:value="L">
-										<span class="price">&nbsp;<span>Ｌ</span></span><span id="sizeL" th:text="${item.priceL}">&nbsp;&nbsp;2,380円(税抜)</span>円(税抜き)
+										<span class="price">&nbsp;<span>Ｌ</span></span><span id="sizeL" th:text="${#numbers.formatInteger(item.priceL, 2,'COMMA')}">&nbsp;&nbsp;2,380円(税抜)</span>円(税抜き)
 									</label>
 								</div>
 							</div>
@@ -130,9 +130,9 @@
 			</div>
 		</div>
 		</form>
+	</div>
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>

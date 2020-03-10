@@ -22,12 +22,14 @@ $(function() {
 		var toynum = $("#toynum option:selected").val();
 		if (size == "M") {
 			var size_price = $("#sizeM").text();
+			size_price_no_comma = Number(size_price.split(',').join(''));
 			var topping_price = 200 * topping_count;
 		} else {
 			var size_price = $("#sizeL").text();
+			size_price_no_comma = Number(size_price.split(',').join(''));
 			var topping_price = 300 * topping_count;
 		}
-		var price = (parseInt(size_price) + topping_price) * toynum;
+		var price = (parseInt(size_price_no_comma) + topping_price) * toynum;
 		$("#totalprice").text(price.toLocaleString());
 	}
 	;

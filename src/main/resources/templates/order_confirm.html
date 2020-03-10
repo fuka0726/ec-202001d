@@ -196,6 +196,8 @@
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
+											<div th:if="${#fields.hasErrors('deliveryTime')}"
+													th:errors="*{deliveryTime}" style="color: red"></div>
 												<label class="radio-inline"> <input type="radio"
 													name="deliveryTime" checked="checked" value="10">
 													10時

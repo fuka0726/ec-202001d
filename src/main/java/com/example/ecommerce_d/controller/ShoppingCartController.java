@@ -69,9 +69,12 @@ public class ShoppingCartController {
 			Random random = new Random();
 			userId = random.nextInt(100);
 			session.setAttribute("dummyUserId", userId);
+		// ログイン前かつダミーユーザーIDがある場合はダミーユーザーIDを渡す
+		} else {
+			userId = (int) (session.getAttribute("dummyUserId"));
 		}
 		service.addItem(form, userId);
-		return showCartList(userId, model, loginUser);
+		return "redirect:/show-cart";
 	}
 
 	/**
@@ -91,6 +94,6 @@ public class ShoppingCartController {
 		if (loginUser != null) {
 			userId = loginUser.getUser().getId();
 		}
-		return showCartList(userId, model, loginUser);
+		return "redirect:/show-cart";
 	}
 }

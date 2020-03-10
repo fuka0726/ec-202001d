@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// staticディレクトリ配下のファイルをセキュリティフィルターから無効化する
-		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/fonts/**");
+		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/fonts/**","/favicon.ico");
 	}
 
 	/**
@@ -37,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests() // 認証に関する設定
-				.antMatchers("/", "/tologin", "/login", "/login-success", "/show-resister", "/resister-user", "/show-cart", "/add-item",
-						"/remove-order-item", "/showItemDetail")
+				.antMatchers("/", "/tologin", "/login", "/show-resister", "/resister-user", "/show-cart", "/add-item",
+						"/remove-order-item", "/showItemDetail", "/show-ordered")
 				.permitAll() // ログインしなくても使用できるパスを指定
 				.anyRequest().authenticated(); // 上記で指定したパス以外は認証が必要
 
