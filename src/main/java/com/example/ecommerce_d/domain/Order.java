@@ -39,7 +39,7 @@ public class Order {
 	private User user;
 	/** 注文リスト */
 	private List<OrderItem> orderItemList;
-
+	
 	public Order() {
 	}
 
