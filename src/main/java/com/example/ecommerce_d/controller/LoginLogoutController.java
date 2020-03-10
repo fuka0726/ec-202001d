@@ -1,5 +1,10 @@
 package com.example.ecommerce_d.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 //import javax.servlet.http.HttpSession;
 
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +32,11 @@ public class LoginLogoutController {
 //	@Autowired
 //	private LoginLogoutUserService loginLogoutUserService;
 //	
-//	@Autowired
-//	private HttpSession session;
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	private HttpServletRequest request;
 
 	/**
 	 * 
@@ -38,6 +46,9 @@ public class LoginLogoutController {
 	 */
 	@RequestMapping("/tologin")
 	public String toLogin(Model model, @RequestParam(required = false) String error) {
+		//ログイン前のパスをセッションに格納する
+		System.out.println("referer:" + request.getHeader("REFERER"));
+		session.setAttribute("referer", request.getHeader("REFERER"));
 		if (error != null) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です");
 		}
