@@ -71,7 +71,7 @@ public class ShoppingCartController {
 			session.setAttribute("dummyUserId", userId);
 		}
 		service.addItem(form, userId);
-		return showCartList(userId, model, loginUser);
+		return "redirect:/show-cart";
 	}
 
 	/**
@@ -91,6 +91,6 @@ public class ShoppingCartController {
 		if (loginUser != null) {
 			userId = loginUser.getUser().getId();
 		}
-		return showCartList(userId, model, loginUser);
+		return "redirect:/show-cart";
 	}
 }
