@@ -3,6 +3,8 @@ package com.example.ecommerce_d.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class ShowItemListController {
 
 	@Autowired
 	private ShowItemListService showItemListService;
+	
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 商品一覧の表示、商品名を検索します.
@@ -34,6 +39,8 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(String searchName, Model model, String getOffset) {
 		List<Item> itemList = null;
+		session.setAttribute("culum", 0);
+		session.setAttribute("getOffset", 1);
 		//sql実行開始番号を初期化
 		int offset = 0;
 		//sql実行開始番号を商品検索画面のページングボタンから取得する.
@@ -116,9 +123,15 @@ public class ShowItemListController {
 	
 	@RequestMapping("/show-ordered")
 	public String showOrderedList(String searchName, Model model, String getOffset,String culum) {
+		System.out.println("------------------------");
 		System.out.println(searchName);
 		System.out.println(getOffset);
 		System.out.println(culum);
+		System.out.println("------------------------");
+		
+		session.setAttribute("culum", culum);
+		session.setAttribute("getOffset", getOffset);
+		
 		List<Item> itemList = null;
 		//sql実行開始番号を初期化
 		int offset = 0;
@@ -132,6 +145,7 @@ public class ShowItemListController {
 		
 		//あいまい検索で検索する.
 		if (searchName != null && showItemListService.searchByName(searchName).size() != 0) {
+			System.out.println("きてる");
 			itemList = showItemListService.searchByName(searchName);
 			int listNumber = itemList.size() / 6;
 			List<Integer> numList = new ArrayList<>();
@@ -180,7 +194,12 @@ public class ShowItemListController {
 				StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
 				model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 		
-		return "item_list_toy";	
+			if(searchName == null) {
+				session.setAttribute("searchName", "商品名をいれてください");
+			} else {
+				session.setAttribute("searchName", searchName);
+			}
+			return "item_list_toy";	
 	}
 
 }

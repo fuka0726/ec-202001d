@@ -101,12 +101,24 @@ public class ShowItemListService {
 		}else if(culum.equals("2")) {
 			culum = "price_m DESC";
 			itemList = itemRepository.findAllOrderByCulum(culum, offset);
+		} else if(culum.equals("0")) {
+			itemList = itemRepository.findAll(offset);
 		}
 		return itemList;
 	}
 	
 	public List<Item> searchByNameOrderByCulum(String name,String culum,Integer offset){
-		return itemRepository.findByLikeNameOrderByCulum(name, culum, offset);
+		List<Item> itemList = new ArrayList<Item>();
+		if(culum.equals("1")) {
+			culum = "price_m";
+			itemList = itemRepository.findByLikeNameOrderByCulum(name, culum, offset);
+		}else if(culum.equals("2")) {
+			culum = "price_m DESC";
+			itemList = itemRepository.findByLikeNameOrderByCulum(name, culum, offset);
+		} else if(culum.equals("0")) {
+			itemList = itemRepository.findByLikeName(name, offset);
+		}
+		return itemList;
 	}
 	
 }

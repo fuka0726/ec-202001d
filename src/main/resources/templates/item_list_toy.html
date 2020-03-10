@@ -20,7 +20,7 @@
     <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/change_order.js}"></script>
 
-<script>
+<!-- <script>
 $( function() {
   var availableTags = [ [(${itemListForAutocomplete})] ];
 
@@ -28,14 +28,14 @@ $( function() {
     source: availableTags
   });
 } );
-</script>
+</script> -->
 </head>
 <body>
 	<div class="container">
 		<nav th:include="header::frag_header"></nav>
-		<span style="display: none" id="forJSCulum"></span>
-		<span style="display: none" id="forJSGetOffset"></span>
-		<span style="display: none" id="forJSSearchName"></span>
+		<span style="display: none" id="forJSCulum" th:text="${session.culum}"></span>
+		<span style="display: none" id="forJSGetOffset" th:text="${session.getOffset}"></span>
+		<span style="display: none" id="forJSSearchName" th:text="${session.searchName}"></span>
 
 		<!-- search form -->
 		<div class="row">
@@ -46,29 +46,29 @@ $( function() {
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" action="item_list_toy.html" th:action="@{/}"
-							class="form-horizontal">
+						<!-- <form method="post" action="item_list_toy.html" th:action="@{/}"
+							class="form-horizontal" id="searchByNameForm"> -->
 							<span th:text="${errormessage}"></span>
 							<div class="form-group">
 							<span class="ui-widget"></span>
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="searchName" id="searchName"
-										th:value="${searchName}" class="form-control input-sm" />
+									<input  type="text" name="searchName" id="searchName"
+										th:value="${session.searchName}" class="form-control input-sm"  />
+									
 								</div>
 							</div>
 							<div class="text-center">
-								<button type="submit" value="検索" class="btn btn-primary">検索</button>
-								<button type="reset" value="クリア" class="btn btn-default" id="jquery_reset_perfect">クリア</button>
+								<button type="submit" value="検索" class="btn btn-primary" id="searchButton">検索</button>
+								<button value="クリア" id="jquery_reset_perfect">クリア</button>
 							</div>
-						</form><br>
+						<!-- </form> --><br>
 						並び替え:&nbsp;
 						<select id="select">
-							<option  value="0">-------</option>
-							<option  value="1">価格（昇順）</option>
-							<option  value="2">価格 (降順)</option>
+							<option id="0" value="0">-------</option>
+							<option id="1" value="1">価格（昇順）</option>
+							<option id="2" value="2">価格 (降順)</option>
 						</select>
-						&nbsp;&nbsp;&nbsp;<button id="reset-order">元に戻す</button>
 					</div>
 				</div>
 			</div>
@@ -104,14 +104,14 @@ $( function() {
 		<div th:each="num,status:${numList}"
 			style="display: inline-block; size: 30px">
 
-			<form th:action="@{/}" method="post">
+			
 				<input type="hidden" th:value="${num}" name="getOffset" >
 				<div style="width: 10%; padding: 10px; font-size: 20px;">
 					<button>
 						<span class="numOfButton" th:text="${status.count}"></span>
 					</button>
 				</div>
-			</form>
+			
 		</div>
 	</div>
 	<!-- end container -->
