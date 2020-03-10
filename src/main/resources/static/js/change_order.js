@@ -2,7 +2,7 @@ $(function(){
 	var culum;
 	$('#select').val($("#forJSCulum").text());
 	var getOffset = $("#forJSGetOffset").text();
-	var searchName = $("#searchName").val();
+	var searchName = $("#forJSSearchName").text();
 	$("#select").on("change",function(){
 		console.log("変更");
 		if($("#select").val() == 1){
@@ -51,6 +51,7 @@ $(function(){
 		if(e.which == 13){
 			searchName = $("#searchName").val();
 			$("#searchName").text(searchName);
+			$("#forJSSearchName").text(searchName);
 			culum = $("#forJSCulum").text();
 			getOffset = 1;
 			location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
@@ -61,6 +62,7 @@ $(function(){
 	$("#searchButton").on("click",function(){
 		searchName = $("#searchName").val();
 		$("#searchName").text(searchName);
+		$("#forJSSearchName").text(searchName);
 		culum = $("#forJSCulum").text();
 		getOffset = 1;
 		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
@@ -69,8 +71,8 @@ $(function(){
 	
 	
 	
-	$("#jquery_reset_perfect").on("click",function(){
-		alert("a");
+	$("#reset").on("click",function(){
+		alert('JavaScriptのアラート');
 //		searchName = "a";
 //		$("#searchName").text(searchName);
 //		culum = $("#forJSCulum").text();
@@ -79,6 +81,7 @@ $(function(){
 		$("#forJSCulum").text("1");
 		culum = $("#forJSCulum").text();
 		getOffset = 1;
+		searchName = "";
 		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
 	});
 	
