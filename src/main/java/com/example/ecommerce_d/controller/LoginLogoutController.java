@@ -34,7 +34,7 @@ public class LoginLogoutController {
 //	
 	@Autowired
 	private HttpSession session;
-	
+
 	@Autowired
 	private HttpServletRequest request;
 
@@ -46,9 +46,16 @@ public class LoginLogoutController {
 	 */
 	@RequestMapping("/tologin")
 	public String toLogin(Model model, @RequestParam(required = false) String error) {
-		//ログイン前のパスをセッションに格納する
+		// ログイン前のパスをセッションに格納する
 		System.out.println("referer:" + request.getHeader("REFERER"));
+		if (request.getHeader("REFERER") == "http://localhost:8080/resister-user"
+				|| request.getHeader("REFERER") == "http://localhost:8080/show-resister"
+				|| request.getHeader("REFERER") == "http://localhost:8080/tologin"
+				|| request.getHeader("REFERER") == "http://localhost:8080/tologin?error=true") {
+			session.setAttribute("referer", "http://localhost:8080/");
+		}
 		session.setAttribute("referer", request.getHeader("REFERER"));
+
 		if (error != null) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です");
 		}
