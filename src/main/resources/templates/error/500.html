@@ -5,7 +5,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- <link href="error.css" rel="stylesheet"> -->
-<link href="/css/error.css" th:href="@{/css/error.css}" rel="stylesheet"></link>
+<link href="/css/error.css" th:href="@{/css/error500.css}" rel="stylesheet"></link>
 </head>
 <body>
 
@@ -14,24 +14,26 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<header class="header">
 <div class="header_logo"><img th:src="@{/img/header_logo.png}"></div>
 <h1>Meintenance</h1>
-		<pre class="text">
-		以下のいずれかの理由でシステムの操作を中断しました。
+<div class="box15">
+	<pre class="text">
+	以下のいずれかの理由でシステムの操作を中断しました。
 
-		・不正な操作が行われた
-		・長い時間操作を行わなかった
-		・現在システムメンテナンス中
+	・不正な操作が行われた
+	・長い時間操作を行わなかった
+	・現在システムメンテナンス中
 	
-		しばらく経ってからもう一度操作してください。
-		</pre>
+	しばらく経ってからもう一度操作してください。
+	
+	<a th:href="@{/tologin}" class="navbar-link">ログイン画面</a>
+	</pre>
+</div>
 
-<ul class="num">
-		<li class="num1"><img th:src="@{/img/5rego.png}"></li>
-		<li class="num2"><img th:src="@{/img/0rego.png}"></li>
-		<li class="num3"><img th:src="@{/img/0rego.png}"></li>
-</ul>
+		<div class="num1"><img th:src="@{/img/5rego.png}"></div>
+		<div class="num2"><img th:src="@{/img/0rego.png}"></div>
+		<div class="num3"><img th:src="@{/img/0rego.png}"></div>
+
 		<div class="lobo"><img th:src="@{/img/mennte.jpg}"></div>
 
-		<a th:href="@{/tologin}" class="navbar-link">ログイン画面</a>
 		 </header>
 	</div>
 </div>
