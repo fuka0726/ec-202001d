@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.ecommerce_d.domain.LoginUser;
 import com.example.ecommerce_d.domain.Order;
@@ -83,9 +84,22 @@ public class OrderConfirmController {
 	 * @param loginUser 利用者ユーザー
 	 * @return 注文完了画面（リダイレクト）
 	 */
-	@RequestMapping("/completeOrder")
+	@RequestMapping(value="/completeOrder", method=RequestMethod.POST)
 	public String completeOrder(@Validated OrderForm form, BindingResult resultset, Integer userId, Model model,
 			@AuthenticationPrincipal LoginUser loginUser) {
+		
+		Date date = Date.valueOf(form.getDeliveryDate());
+		LocalDate localdate = date.toLocalDate();
+		LocalTime localTime = LocalTime.of(Integer.parseInt(form.getDeliveryTime()), 00);
+		LocalDateTime localDateTime = LocalDateTime.of(localdate, localTime);
+		
+		LocalDateTime timeLimit = LocalDateTime.now();
+		timeLimit = timeLimit.plusHours(12);
+		
+		if(timeLimit.isAfter(localDateTime)) {
+			FieldError deliveryDateError = new FieldError(resultset.getObjectName(), "deliveryTime", "配達時間は注文日時より12時間後以降のお時間帯に設定してください。");
+			resultset.addError(deliveryDateError);
+		}
 
 		if ("".equals(form.getDeliveryDate())) {
 			FieldError deliveryDateError = new FieldError(resultset.getObjectName(), "deliveryDate", "配達日を入力してください");
@@ -96,17 +110,13 @@ public class OrderConfirmController {
 			return orderConfirm(userId, model, loginUser);
 		}
 		// 配達日をSQL用のTimestamp型に変更
-		Date date = Date.valueOf(form.getDeliveryDate());
-		LocalDate localdate = date.toLocalDate();
-		LocalTime localTime = LocalTime.of(Integer.parseInt(form.getDeliveryTime()), 00);
-		LocalDateTime localDateTime = LocalDateTime.of(localdate, localTime);
-		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		// Orderインスタンスを作成(テーブルからとってきた方が良いのかしら？）
 		//データベースの総額をアップデートするために、カートリストの商品一覧を呼ぶsql実行
 		Order ordered=shoppingCartService.showCartList(loginUser.getUser().getId());
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
 		//注文日セット
+		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
 		//ユーザーidセット
 		order.setUserId(loginUser.getUser().getId());
