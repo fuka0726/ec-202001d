@@ -1,5 +1,9 @@
 package com.example.ecommerce_d.controller;
 
+import java.util.Random;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,8 +22,11 @@ public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartService service;
 
+	@Autowired
+	private HttpSession session;
+
 	/**
-	 * 
+	 * カートの中身を表示します.
 	 * 
 	 * @param userId hiddenで送られきたユーザーID
 	 * @return カート画面
@@ -27,14 +34,15 @@ public class ShoppingCartController {
 	@RequestMapping("/show-cart")
 	// ログインユーザーを受け取る
 	public String showCartList(Integer userId, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-//		TODO直下1行はあとで消す。(ログインユーザーがいない場合はuserId=2で検索する)
-		userId = 2;
-		// ログインユーザーがいればログインユーザーのIDで検索する
+		Order order = null;
+		// ログインしている場合
 		if (loginUser != null) {
-			userId = loginUser.getUser().getId();
+			order = service.showCartList(loginUser.getUser().getId());
+			// ダミーのユーザーIDが発番されている場合
+		} else if (session.getAttribute("dummyUserId") != null) {
+			order = service.showCartList((int) (session.getAttribute("dummyUserId")));
 		}
-		Order order = service.showCartList(userId);
-		// ショッピングカートにアイテムなければメッセージを表示する
+		// ショッピングカートにアイテムがなければメッセージを表示する
 		if (order == null) {
 			model.addAttribute("message", "カート内に商品はありません");
 		}
@@ -51,12 +59,16 @@ public class ShoppingCartController {
 	 */
 	@RequestMapping("/add-item")
 	// ログインユーザーを受け取る
-	public String addItem(AddItemForm form, Integer userId, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-//		直下1行はあとで消す。(ログインユーザーがいない場合はuserId=2で検索する)
-		userId = 2;
-		// ログインユーザーがいればログインユーザーのIDで検索する
+	public String addItem(AddItemForm form, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		int userId = 0;
+		// ログインユーザーがいればログインユーザーのIDを渡す
 		if (loginUser != null) {
 			userId = loginUser.getUser().getId();
+		// ログイン前かつダミーユーザーIDがなければ仮のユーザーIDを渡してsessionに格納する
+		} else if (session.getAttribute("dummyUserId") == null) {
+			Random random = new Random();
+			userId = random.nextInt(100);
+			session.setAttribute("dummyUserId", userId);
 		}
 		service.addItem(form, userId);
 		return showCartList(userId, model, loginUser);
