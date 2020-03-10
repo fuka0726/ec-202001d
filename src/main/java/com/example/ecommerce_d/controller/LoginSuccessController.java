@@ -52,6 +52,7 @@ public class LoginSuccessController {
 				service.updateUserIdOfOrders(loginUserId, dummyUserId);
 			}
 		}
-		return "forward:/";
+		System.out.println(session.getAttribute("referer"));
+		return "redirect:" + (String)session.getAttribute("referer");
 	}
 }
