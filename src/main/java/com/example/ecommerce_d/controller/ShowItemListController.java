@@ -122,6 +122,15 @@ public class ShowItemListController {
 		return itemListList;
 	}
 
+	/**
+	 * 商品一覧の表示、場合によっては検索欄に入力された文字での検索結果を表示する.
+	 * 
+	 * @param searchName　検索欄に入力された文字
+	 * @param model　リクエストスコープ
+	 * @param getOffset　商品一覧の下部にあるクリックされたボタンの値
+	 * @param culum　カラム名
+	 * @return
+	 */
 	@RequestMapping("/show-ordered")
 	public String showOrderedList(String searchName, Model model, String getOffset,String culum) {
 		System.out.println(searchName);

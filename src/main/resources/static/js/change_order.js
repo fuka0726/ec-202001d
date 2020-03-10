@@ -3,6 +3,7 @@ $(function(){
 	$('#select').val($("#forJSCulum").text());
 	var getOffset = $("#forJSGetOffset").text();
 	var searchName = $("#forJSSearchName").text();
+	
 	$("#select").on("change",function(){
 		console.log("変更");
 		if($("#select").val() == 1){

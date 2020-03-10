@@ -93,6 +93,13 @@ public class ShowItemListService {
 		return itemList;
 	}
 	
+	/**
+	 * culumの値によってrepositoryに渡す値を変えてアイテム情報を検索する.
+	 * 
+	 * @param culum カラム名
+	 * @param offset　検索開始位置
+	 * @return　アイテム情報
+	 */
 	public List<Item> showItemListOrderByCulum(String culum,Integer offset){
 		List<Item> itemList = new ArrayList<Item>();
 		if(culum.equals("1")) {
@@ -107,6 +114,14 @@ public class ShowItemListService {
 		return itemList;
 	}
 	
+	/**
+	 * culumの値によってrepositoryに渡す値を変えて、nameの値でアイテム情報を検索する.
+	 * 
+	 * @param name 名前
+	 * @param culum　カラム名
+	 * @param offset　検索開始位置
+	 * @return　アイテム情報
+	 */
 	public List<Item> searchByNameOrderByCulum(String name,String culum,Integer offset){
 		List<Item> itemList = new ArrayList<Item>();
 		if(culum.equals("1")) {

@@ -27,7 +27,7 @@ public class OrderItem {
 	/**
 	 * 注文アイテムの小計を計算します.
 	 * 
-	 * @return
+	 * @return 注文アイテムの小計
 	 */
 	public int getSubTotal() {
 		int subTotal = 0;

@@ -123,6 +123,14 @@ public class ItemRepository {
 		return template.query(sql, param,ITEM_ROW_MAPPER);
 	}
 	
+	/**
+	 * 何の順番で並べるか、それに加えて入力欄の値で曖昧検索をして商品情報を返す.
+	 * 
+	 * @param name　検索欄に入力された文字
+	 * @param culum カラム名
+	 * @param offset　検索開始位置
+	 * @return　商品情報のリスト
+	 */
 	public List<Item>findByLikeNameOrderByCulum(String name,String culum,Integer offset){
 		String sql = "SELECT id, name, description, price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name ORDER BY " + culum + ",id LIMIT 6 OFFSET :offset";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("offset", offset).addValue("name", "%" + name + "%");
