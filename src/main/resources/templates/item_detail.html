@@ -15,8 +15,8 @@
     <script type="text/javascript" th:src="@{/js/item_detail.js}"></script>
 </head>
 <body>
-
-<div th:include="header::frag_header"></div>
+<div class="container">
+<nav th:include="header::frag_header"></nav>
 
 		<form action="item_detail.html" method="post" th:action="@{/add-item}" >
 		<div class="row">
@@ -130,6 +130,7 @@
 			</div>
 		</div>
 		</form>
+	</div>
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
