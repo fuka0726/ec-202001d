@@ -25,9 +25,12 @@ public class UserResisterForm {
 	@NotBlank(message="住所を入力してください")
 	private String address;
 	/** 電話番号 */
+	@Pattern(regexp = "^[0-9]{11}$",message="11桁の数字を入力してください(ハイフンなし)")
 	@NotBlank(message="電話番号を入力してください")
 	private String telephone;
 	/** パスワード */
+	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$"
+			,message="8文字以上・数字・大文字・小文字・記号を含めてください")
 	@NotBlank(message="パスワードを入力してください")
 	private String password;
 	/** 確認用パスワード */
