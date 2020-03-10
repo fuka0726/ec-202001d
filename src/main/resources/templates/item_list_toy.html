@@ -81,14 +81,14 @@ $( function() {
 				<table class="table table-striped">
 					<tbody>
 						<tr th:each="itemList :${itemListList}">
-							<th th:each="item : ${itemList}"><a href="item_detail.html"
+							<th style="width:50px" th:each="item : ${itemList}"><a href="item_detail.html"
 								th:href="@{'/showItemDetail?id=' + ${item.id}}"> <img
 									src="../static/img/1.jpg"
 									th:src="@{'/img/'+ ${item.imagePath}}"
 									class="img-responsive img-rounded" width="200" height="600">
 							</a><br> <a href="item_detail.html"
 								th:href="@{'/showItemDetail?id=' + ${item.id}}"> <span
-									th:text="${item.name}">じゃがバターベーコン</span>
+									th:text="${item.name}" >じゃがバターベーコン</span>
 							</a><br> <span class="price">&nbsp;<span th:text="M">М</span>&nbsp;
 							</span><span th:text="${item.priceM} + '円(税抜)'">&nbsp;&nbsp;1,380円(税抜)</span><br>
 								<span class="price">&nbsp;<span th:text="L">L</span>&nbsp;
