@@ -21,13 +21,6 @@ $(function(){
 //			document.getElementById('2').options[2].selected = true;
 		};
 		
-		if($("#select").val() == 0){
-			$("#forJSCulum").text("0");
-			culum = $("#forJSCulum").text();
-			getOffset = 1;
-			location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
-//			document.getElementById('0').options[0].selected = true;
-		}
 	});
 	
 //	$("#select".val()).on("change",function(){
@@ -72,13 +65,12 @@ $(function(){
 	
 	
 	$("#reset").on("click",function(){
-		alert('JavaScriptのアラート');
 //		searchName = "a";
 //		$("#searchName").text(searchName);
 //		culum = $("#forJSCulum").text();
 //		getOffset = 1;
 //		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=';
-		$("#forJSCulum").text("1");
+//		$("#forJSCulum").text("1");
 		culum = $("#forJSCulum").text();
 		getOffset = 1;
 		searchName = "";

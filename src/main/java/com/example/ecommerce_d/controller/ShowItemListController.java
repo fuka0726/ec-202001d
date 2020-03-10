@@ -39,7 +39,7 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(String searchName, Model model, String getOffset) {
 		List<Item> itemList = null;
-		session.setAttribute("culum", 0);
+		session.setAttribute("culum", 1);
 		session.setAttribute("getOffset", 1);
 		//sql実行開始番号を初期化
 
