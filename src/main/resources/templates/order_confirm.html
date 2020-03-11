@@ -103,6 +103,8 @@
 							<div class="form-group text-center">
 								<span style="font-size: 40px">消費税:</span><span id="total-price"
 									th:text="${#numbers.formatInteger(order.getTax(), 1, 'COMMA') + '円'}">消費税：8,000円</span><br>
+									<br>
+									<br>
 								<span style="font-size: 40px">ご注文金額合計:</span><span
 									id="total-price"
 									 th:text="${#numbers.formatInteger(order.getCalcTotalPrice()+order.getTax(), 1, 'COMMA') + '円'}">ご注文金額合計：38,000円
@@ -198,6 +200,8 @@
 											<div class="col-sm-12">
 											<div th:if="${#fields.hasErrors('deliveryTime')}"
 													th:errors="*{deliveryTime}" style="color: red"></div>
+											<div th:unless="${#fields.hasErrors('deliveryTime')}"
+													th:text="配達時間は注文日時より12時間以上後のお時間帯をお選びください"></div>		
 												<label class="radio-inline"> <input type="radio"
 													name="deliveryTime" checked="checked" value="10">
 													10時
@@ -227,7 +231,6 @@
 					</table>
 				</div>
 			</div>
-
 			<!-- table -->
 			<div class="row">
 				<div
@@ -270,13 +273,12 @@
 								</td>
 							</tr>
 							<tr>
+
 								<td colspan="2" id="creditPayMethod">
-								<P>支払い情報</P>
-								<input type="radio" name="creditPayMethod" checked="checked">銀行振込
-								<input type="radio" name="creditPayMethod">クレジットカード<br>
+								<P>支払い情報</P><span th:errors="*{error_code}" style="color: red"></span><br>
 								クレジットカード番号 :<input type="text" id="card_number" name="card_number" maxlength="16"><br>
 								有効期限 :
-								<select id="card_exp_month">
+								<select id="card_exp_month" name="card_exp_month">
 									<option>--</option>
 									<option value="01">01</option>
 									<option value="02">02</option>
@@ -291,7 +293,7 @@
 									<option value="11">11</option>
 									<option value="12">12</option>
 								</select>
-								<select id="card_exp_year">
+								<select id="card_exp_year" name="card_exp_year">
 									<option>----</option>
 									<option value="2018">2018</option>
 									<option value="2019">2019</option>
@@ -315,7 +317,7 @@
 									<option value="2037">2037</option>
 									<option value="2038">2038</option>
 								</select><br>
-								カード名義人 :<input type="text" name="cardholder" maxlength="50"><br>
+								カード名義人 :<input type="text" name="card_name" maxlength="50"><br>
 								セキュリティーコード :<input type="text" id="card_cvv" name="card_cvv" maxlength="4">
 								</td>
 							</tr>

@@ -4,19 +4,41 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>従業員管理システム</title>
+<title>404エラー</title>
+<link href="/css/error.css" th:href="@{/css/error404.css}" rel="stylesheet"></link>
 </head>
 <body>
-<pre>
-404 Not Found
-申し訳ございません。お探しのページは見つかりませんでした。
 
-以下のリンクからログインし直してください。
+<div class="background-image">
+	<div class="opaque-background">
+		<header class="header">
+<div class="header_logo"><img th:src="@{/img/header_logo.png}"></div>
+<h1>Not Found</h1>
+
+<div class="box14">
+	<pre class="text">
+	申し訳ございません。
+	お探しのページは見つかりませんでした。
+
+	以下のリンクからログインし直してください。
+	
+	<a th:href="@{/tologin}" class="navbar-link">ログイン画面</a>
+	</pre>
+</div>
+
+		<div class="num1"><img th:src="@{/img/4rego.png}"></div>
+		<div class="num2"><img th:src="@{/img/0rego.png}"></div>
+		<div class="num3"><img th:src="@{/img/4rego.png}"></div>
+
+		<div class="lobo"><img th:src="@{/img/toy_not_found.png}"></div>
+
+		 </header>
+	</div>
+</div>
 
 
 
-</pre>
 
-<a th:href="@{/}" class="navbar-link">ログイン画面</a>
+
 </body>
 </html>

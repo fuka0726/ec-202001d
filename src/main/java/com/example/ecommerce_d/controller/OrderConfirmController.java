@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,13 +21,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 
+import com.example.ecommerce_d.domain.CreditCardApi;
 import com.example.ecommerce_d.domain.LoginUser;
 import com.example.ecommerce_d.domain.Order;
 import com.example.ecommerce_d.domain.OrderItem;
 import com.example.ecommerce_d.domain.OrderTopping;
 import com.example.ecommerce_d.domain.User;
+import com.example.ecommerce_d.form.CreditCardForm;
 import com.example.ecommerce_d.form.OrderForm;
+import com.example.ecommerce_d.service.CreditCardApiService;
 import com.example.ecommerce_d.service.OrderConfirmService;
 import com.example.ecommerce_d.service.ShoppingCartService;
 import com.example.ecommerce_d.service.UserDetailsServiceImpl;
@@ -52,6 +57,15 @@ public class OrderConfirmController {
 	
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+
+	@Autowired
+	private CreditCardApiService creditCardApiService;
+	
+	//Web APIを呼び出すためのメソッドを提供するクラス
+	@Bean
+	RestTemplate RestTemplate() {
+	return new RestTemplate();
+	}
 	
 	@ModelAttribute
 	public OrderForm setUpOrderForm() {
@@ -91,34 +105,42 @@ public class OrderConfirmController {
 	public String completeOrder(@Validated OrderForm form, BindingResult resultset, Integer userId, Model model,
 			@AuthenticationPrincipal LoginUser loginUser) {
 		
+		LocalDateTime localDateTime=null;
+		LocalDateTime timeLimit=null;
+		//日付が入力されていない場合
+		if ("".equals(form.getDeliveryDate())) {
+			FieldError deliveryDateError = new FieldError(resultset.getObjectName(), "deliveryDate", "配達日が未入力です");
+			resultset.addError(deliveryDateError);
+			//日付が入っている場合は、注文時間の12時間後の日時が代入された変数を作成する(配達時間のルール設定のため)
+		}else {
+		// 配達日をSQL用のTimestamp型に変更
 		Date date = Date.valueOf(form.getDeliveryDate());
 		LocalDate localdate = date.toLocalDate();
 		LocalTime localTime = LocalTime.of(Integer.parseInt(form.getDeliveryTime()), 00);
-		LocalDateTime localDateTime = LocalDateTime.of(localdate, localTime);
-		
-		LocalDateTime timeLimit = LocalDateTime.now();
+		//localDateTimeは発注日時。144行目でorderオブジェクトに代入
+		localDateTime = LocalDateTime.of(localdate, localTime);
+		timeLimit = LocalDateTime.now();
 		timeLimit = timeLimit.plusHours(12);
+		}
 		
-		if(timeLimit.isAfter(localDateTime)) {
-			FieldError deliveryDateError = new FieldError(resultset.getObjectName(), "deliveryTime", "配達時間は注文日時より12時間後以降のお時間帯に設定してください。");
-			resultset.addError(deliveryDateError);
+		//日付が入っているかつ、配達時間を注文日時の12時間いないに設定したらエラーが発生される
+		if(!"".equals(form.getDeliveryDate()) && timeLimit.isAfter(localDateTime)) {
+			FieldError deliveryTimeError = new FieldError(resultset.getObjectName(), "deliveryTime", "配達時間は注文日時より12時間以上後のお時間帯をお選びください");
+			resultset.addError(deliveryTimeError);
 		}
 
-		if ("".equals(form.getDeliveryDate())) {
-			FieldError deliveryDateError = new FieldError(resultset.getObjectName(), "deliveryDate", "配達日を入力してください");
-			resultset.addError(deliveryDateError);
-		}
+	
 		// エラーがある場合は注文確認画面に遷移
 		if (resultset.hasErrors()) {
 			return orderConfirm(userId, model, loginUser);
 		}
-		// 配達日をSQL用のTimestamp型に変更
-		// Orderインスタンスを作成(テーブルからとってきた方が良いのかしら？）
+		
+		
 		//データベースの総額をアップデートするために、カートリストの商品一覧を呼ぶsql実行
 		Order ordered=shoppingCartService.showCartList(loginUser.getUser().getId());
 		Order order = new Order();
 		BeanUtils.copyProperties(form, order);
-		//注文日セット
+		//注文日セット(localDateTimeは117行目からのif文で生成している)
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
 		//ユーザーidセット
@@ -131,13 +153,54 @@ public class OrderConfirmController {
 		} else {
 			order.setStatus(2);
 		}
-		//注文確認メールに注文詳細を記載するためにsql発行
+		//カード決済用のオブジェクト生成
+		CreditCardForm creditCardForm = new CreditCardForm();
+		//リクエストパラメーターで受け取った値をカード決済用のオブジェクトに入れ替える
+		BeanUtils.copyProperties(form, creditCardForm);
+		
+		//注文確認メールに注文詳細を記載するためにsql発行(カード決済のための注文idを取得したいため、このタイミングで発動)
 		List<Order> orderList = orderConfirmService.showOrderedList(loginUser.getUser().getId());
+		//カード決済のために注文idをセット
+		for(Order id:orderList) {
+			creditCardForm.setOrder_number(id.getId());
+		}
+
+		creditCardForm.setAmount(ordered.getCalcTotalPrice()+ordered.getTax());
+		creditCardForm.setUser_id(loginUser.getUser().getId());
+		
+		//クレジット決済のwebapiにリクエスト送信する
+		System.out.println(creditCardForm.getCard_cvv());
+		System.out.println(creditCardForm.getCard_exp_month());
+		System.out.println(creditCardForm.getCard_exp_year());
+		System.out.println(creditCardForm.getCard_name());
+		System.out.println(creditCardForm.getCard_number());
+		System.out.println(creditCardForm.getOrder_number());
+		System.out.println(creditCardForm.getUser_id());
+		CreditCardApi creditCardApi=null;
+		if(order.getPaymentMethod()==2) {
+		creditCardApi=creditCardApiService.service(creditCardForm);
+		System.out.println(creditCardApi);
+		}
+		
+		
+		if(order.getPaymentMethod()==2 && creditCardApi.getError_code().equals("E-01")) {
+			FieldError creditApiError = new FieldError(resultset.getObjectName(), "error_code", "カードの有効期限が切れています");
+			resultset.addError(creditApiError);
+			return orderConfirm(userId, model, loginUser);
+		}else if(order.getPaymentMethod()==2 && creditCardApi.getError_code().equals("E-02")) {
+			FieldError creditApiError = new FieldError(resultset.getObjectName(), "error_code", "カード情報が不正です");
+			resultset.addError(creditApiError);
+			return orderConfirm(userId, model, loginUser);
+		}else if(order.getPaymentMethod()==2 && creditCardApi.getError_code().equals("E-03")){
+			FieldError creditApiError = new FieldError(resultset.getObjectName(), "error_code", "カード番号,有効期限、セキュリティコードは数値で入力ください");
+			resultset.addError(creditApiError);
+			return orderConfirm(userId, model, loginUser);
+		}
+
+		//注文情報を更新する
 		orderConfirmService.updateStatus(order); 
-		
-		
 		//メール送信するメソッドを呼ぶ.
-		sendEmail(order,orderList);
+//		sendEmail(order,orderList);
 		
 		return "redirect:/tocomplete";
 	}
