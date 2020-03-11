@@ -3,7 +3,6 @@ $(function(){
 	$('#select').val($("#forJSCulum").text());
 	var getOffset = $("#forJSGetOffset").text();
 	var searchName = $("#forJSSearchName").text();
-	
 	$("#select").on("change",function(){
 		console.log("変更");
 		if($("#select").val() == 1){
@@ -65,23 +64,25 @@ $(function(){
 	
 	
 	
-	$("#reset").on("click",function(){
-//		searchName = "a";
-//		$("#searchName").text(searchName);
-//		culum = $("#forJSCulum").text();
-//		getOffset = 1;
-//		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=';
-//		$("#forJSCulum").text("1");
-		
+//	$("#clearButton").on("click",function(){
+////		searchName = "a";
+////		$("#searchName").text(searchName);
+////		culum = $("#forJSCulum").text();
+////		getOffset = 1;
+////		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=';
+////		$("#forJSCulum").text("1");
+//		alert("aaaaaa");
 //		culum = $("#forJSCulum").text();
 //		getOffset = 1;
 //		searchName = "";
 //		location.href = '/show-ordered?culum=' + culum + '&getOffset=' + getOffset + '&searchName=' + searchName;
-		
-		document.getElementById("reset").reset();
-	});
+//	});
 	
-	
+    $("#reset").on("click", function () {
+        $("#searchName").val("");
+  
+    });
+
 	
 	
 	
