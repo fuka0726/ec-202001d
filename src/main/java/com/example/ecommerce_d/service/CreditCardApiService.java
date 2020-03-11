@@ -20,7 +20,7 @@ public class CreditCardApiService {
     @Autowired
     RestTemplate restTemplate;
 
-    private static final String URL = "http://192.168.100.115:8080/sample-credit-card-web-api/credit-card/payment";
+    private static final String URL = "http://192.168.17.19:8080/sample-credit-card-web-api/credit-card/payment";
     
     public CreditCardApi service(CreditCardForm creditCardForm) {
         return restTemplate.postForObject(URL, creditCardForm, CreditCardApi.class);
