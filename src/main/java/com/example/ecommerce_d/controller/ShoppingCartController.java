@@ -42,6 +42,7 @@ public class ShoppingCartController {
 		} else if (session.getAttribute("dummyUserId") != null) {
 			order = service.showCartList((int) (session.getAttribute("dummyUserId")));
 		}
+		System.out.println(order);
 		// ショッピングカートにアイテムがなければメッセージを表示する
 		if (order == null) {
 			model.addAttribute("message", "カート内に商品はありません");

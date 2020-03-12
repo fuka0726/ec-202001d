@@ -200,7 +200,7 @@ public class OrderConfirmController {
 		//注文情報を更新する
 		orderConfirmService.updateStatus(order); 
 		//メール送信するメソッドを呼ぶ.
-//		sendEmail(order,orderList);
+		sendEmail(order,orderList);
 		
 		return "redirect:/tocomplete";
 	}
@@ -274,7 +274,7 @@ public class OrderConfirmController {
 		//送り主
 		msg.setFrom("namiki.ba13@gmail.com");
 		//宛先
-		msg.setTo("namiki.ba13@gmail.com");//order.getDestinationEmail() を本来入れる
+		msg.setTo("greatpotato20@gmail.com");//order.getDestinationEmail() を本来入れる
 		msg.setSubject("ご注文完了のお知らせ");
 		//本文
 		msg.setText(message);
